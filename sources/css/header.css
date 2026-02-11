@@ -1,0 +1,99 @@
+.cv-header p, .cv-header a {
+    margin: 5px 0;
+    color: #666;
+}
+
+.cv-header {
+    background-color: #f5f5f5;
+    padding: 0.05px;
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+    font-family: "Kanit", sans-serif;
+    padding: 25px;
+}
+
+.photo-and-name {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-block: 5px;
+    margin-bottom: 15px;
+}
+
+.photo-and-name img {
+    width: 100px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+}
+
+.photo-and-name .right {
+    margin-left: 15px;
+    margin-block: 10px;
+    justify-content: left;
+    text-align: left;
+}
+
+.photo-and-name .right h1 {
+    margin: 0;
+    margin-top: -15px;
+    margin-bottom: -3px;
+    color: #333;
+    /* font-size: 52px; */
+    font-size: 60px;
+    line-height: 1em;
+}
+
+.photo-and-name .right p.bio {
+    margin: 0;
+    /* font-size: 14px; */
+    font-size: 16.4px;
+}
+
+.contact-and-links {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.contact-and-links>* {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-and-links address p {
+    margin-block: 3px;
+    font-style: normal;
+    width: fit-content;
+}
+
+.contact-and-links a {
+    margin: 0;
+}
+
+.contact-and-links a>* {
+    /* vertical-align: bottom; */
+    align-items: baseline;
+}
+
+.contact-and-links>*:first-child {
+    align-items: start;
+}
+
+.contact-and-links>*:last-child {
+    align-items: end;
+}
+
+.contact-and-links .icon {
+    width: 20px;
+    font-size: 20px;
+}
+
+.contact-and-links .links .icon:first-child {
+    margin-right: 5px;
+}
+
+.contact-and-links .contact .icon:last-child {
+    margin-left: 5px;
+}

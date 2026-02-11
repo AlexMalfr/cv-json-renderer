@@ -1,0 +1,113 @@
+@import './header.css';
+@import './body.css';
+
+/* fonts */
+@import url('https://fonts.googleapis.com/css?family=Kanit:300,400,500,700,900');
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Base styles for the CV page */
+#cv {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #333;
+    background: #fff;
+}
+
+@media screen {
+    body {
+        width: 100%;
+        margin: 0;
+        padding-block: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #f0f0f0;
+    }
+
+    body>*:not(#cv) {
+        text-align: center;
+        padding-inline: 100px;
+        font-family: "Kanit", sans-serif;
+    }
+
+    body>*:not(#cv) p {
+        color: #333;
+        line-height: 0.8em;
+        text-align: justify;
+    }
+
+    body>*:not(#cv) a {
+        color: #888;
+        font-style: italic;
+        font-weight: lighter;
+        font-size: 0.9em;
+        padding: 5px;
+    }
+
+    body>*:not(#cv) button {
+        display: inline-block;
+        margin-block: 20px;
+        margin-inline: 10px;
+        padding: 10px 30px;
+        border-radius: 0;
+        border: 2px solid #000;
+        background-color: #DDD;
+        color: #000;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    body>*:not(#cv) button:hover {
+        background-color: #000;
+        color: #FFF;
+        transition-property: background-color, color;
+        transition-duration: 0.5s;
+        transition-timing-function: ease-in-out;
+    }
+
+    #cv {
+        /* Mimic an A4 paper */
+        box-sizing: border-box;
+        width: 210mm;
+        height: 297mm;
+        overflow: visible;
+
+        /* Placing the A4 paper in the middle with some shadow */
+        box-shadow: -5px 0mm 4mm 3px rgba(0, 0, 0, 0.1);
+        margin: 10mm;
+
+        /* Ensure scaling happens from the top center */
+        transform-origin: top center;
+    }
+}
+
+
+@media print {
+    .print-hidden {
+        display: none;
+    }
+
+    /* Hide everything else except the CV */
+    body>*:not(#cv) {
+        display: none;
+    }
+
+    @page {
+        /* Remove default margin to use custom margin that we set in #cv
+        (to match the web version) */
+        margin: -10px;
+        padding: 0;
+        size: A4;
+    }
+}
+
+a {
+    color: none;
+    text-decoration: none;
+}
+
+/* Links with a defined href */
+a:hover[href] {
+    text-shadow: 0 0 1px #000;
+}

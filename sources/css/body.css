@@ -1,0 +1,128 @@
+/* CV Body layout */
+.cv-body {
+    font-family: "Red Hat Display";
+    padding: 20px;
+}
+
+.cv-body {
+    display: grid;
+    grid-template-columns: 9fr 7fr;
+    padding: 15px;
+}
+
+section {
+    margin-bottom: 10px;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    /* border-left: 3px solid #aaa; */
+    padding-inline: 15px;
+    padding-block: 15px;
+}
+
+.cv-body>*:not(:first-child) {
+    margin-left: 10px;
+}
+
+
+/* Titles */
+h2 {
+    color: #333;
+    font-size: 2em;
+    line-height: 1.1em;
+    font-weight: bold;
+    margin: 0px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+h3 {
+    color: #333;
+    font-size: 1.3em;
+    line-height: 1.1em;
+    font-weight: bold;
+    margin: 0px;
+}
+
+.cv-body p {
+    color: #666;
+    margin: 0px;
+    margin-bottom: 5px;
+}
+
+.cv-body p a {
+    color: #666 !important;
+    text-decoration: none;
+}
+
+.cv-body .icon {
+    color: black;
+    margin-right: 10px;
+    font-size: 23px;
+}
+
+p.date {
+    color: #AAA;
+    font-style: italic;
+    margin: 0;
+    text-align: right;
+    line-height: 1em;
+}
+
+
+
+/* Sections */
+.section .title-elem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.section:not(.section-languages) .item:not(:first-of-type) {
+    margin-top: 14px;
+}
+
+.section .title-elem>*:not(:first-child) {
+    text-align: right;
+    margin-left: 10px;
+}
+
+
+/* Sections : education */
+.section-education .education-degree {
+    font-weight: 700;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.section-education .education-specialization:not(:empty) {
+    margin-top: -5px;
+    line-height: 1.1em;
+}
+
+.section-education .education-skills {
+    font-style: italic;
+    text-align: justify;
+    font-size: smaller;
+    color: #AAA;
+    /* line-height: 1.1em; */
+}
+
+
+/* Sections : education */
+.section-experience .experience-position {
+    font-weight: 700;
+}
+
+
+/* Sections : language */
+.language-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.language-item>*:not(:first-child) {
+    text-align: right;
+    margin-left: 10px;
+}

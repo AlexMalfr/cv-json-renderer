@@ -25,12 +25,11 @@ function loadI18n() {
     return Promise.all(promises).then(() => translations);
 }
 
-function initI18n(translations) {
+function initI18n(translations, lang='fr') {
     i18next.init({
-        lng: 'fr',
-        debug: true,
-        resources: translations
-    }, function (err, t) {
+        lng: lang,
+        resources: translations,
+        // debug: true
     });
 }
 
@@ -40,32 +39,55 @@ document.addEventListener('DOMContentLoaded', function () {
     }).catch(error => console.error('Failed to load translations:', error));
 
     // load JSON data from a file
-    let cvData = null;
-    // let fileURL = "sources/cv-data.template.json";
-    let fileURL = "sources/cv-data.json";
+    // let fileURL = "sources/cv-data/cv-data.template.json";
+    let fileURL = "sources/cv-data/cv-data.json";
+
+    // get fileURL from the query string (if it exists)
+    let urlParams = new URLSearchParams(window.location.search);
+    let fileParam = urlParams.get('file');
+    if (fileParam != null) {
+        fileURL = fileParam;
+    }
+
+    let cvData = loadJSON(fileURL);
+});
+
+function loadJSON(fileURL) {
     let request = new XMLHttpRequest();
     request.open("GET", fileURL, true);
     request.responseType = "json";
     request.send();
+
+    console.log("loading JSON data");
+
     request.onload = function () {
-        cvData = request.response;
+        console.log("JSON data loaded");
+        jsonData = request.response;
+        meta = jsonData.meta;
+        cvData = jsonData.data;
         console.log(cvData);
 
         displayCV(cvData);
 
         // Change favicon and title from the JSON data
-        document.title = `${cvData.name} - CV`;
+        document.title = `${cvData.name} - CV ${cvData.meta.title}`;
         let favicon = document.getElementById('favicon');
         favicon.href = cvData.profile_picture;
-        let title = document.getElementById('title');
     };
+    
     request.onloadend = function () {
+        let title = document.getElementById('title');
         title.textContent = `${cvData.name} - CV`;
     }
-});
+};
 
 function displayCV(data) {
     const cvContainer = document.getElementById('cv');
+    
+    // empty the container
+    while (cvContainer.firstChild) {
+        cvContainer.removeChild(cvContainer.firstChild);
+    }
 
     // Create header
     const headerElem = createHeader(data);
@@ -92,7 +114,10 @@ function displayCV(data) {
     rightColumn.appendChild(createSection_Skills(data));
     rightColumn.appendChild(createSection_Languages(data));
 
-    cvBody.appendChild(createFooter(data));
+    let footer = createFooter(data);
+    if (footer != null) {
+        cvContainer.appendChild(footer);
+    }
 }
 
 
@@ -206,7 +231,7 @@ function createSection(data, title, icon) {
 
 function createSection_Education(data) {
     const icon = data.icons.education;
-    const educationElem = createSection(data, "Éducation", icon);
+    const educationElem = createSection(data, i18next.t("education"), icon);
     educationElem.classList.add("section-education");
 
     data.education.forEach(item => {
@@ -230,28 +255,45 @@ function createSection_Education(data) {
         institutionElem.textContent = item.institution;
         titleElem.appendChild(institutionElem);
         
-        const yearsElem = document.createElement('p');
-        yearsElem.classList.add("date");
-        yearsElem.textContent = item.years;
-        titleElem.appendChild(yearsElem);
+        // Date
+        if (item.years != null) {
+            const yearsElem = document.createElement('p');
+            yearsElem.classList.add("date");
+            yearsElem.textContent = item.years;
+            titleElem.appendChild(yearsElem);
+        }
         
         // Diplôme
-        const degreeElem = document.createElement('p');
-        degreeElem.textContent = item.degree + (item.mention ? ` (Mention "${item.mention}")` : "")
-        degreeElem.classList.add("education-degree");
-        linkElem.appendChild(degreeElem);
+        if (item.degree != null) {
+            const degreeElem = document.createElement('p');
+            degreeElem.textContent = item.degree + (item.mention ? ` (Mention "${item.mention}")` : "") // fr
+            // degreeElem.textContent = item.degree + (item.mention ? ` - ${item.mention}` : "") // en
+            degreeElem.classList.add("education-degree");
+            linkElem.appendChild(degreeElem);
+        }
 
         // Spécialisation
-        const specializationElem = document.createElement('p');
-        specializationElem.textContent = item.specialization;
-        specializationElem.classList.add("education-specialization");
-        linkElem.appendChild(specializationElem);
+        if (item.specialization != null) {
+            const specializationElem = document.createElement('p');
+            specializationElem.textContent = item.specialization;
+            specializationElem.classList.add("education-specialization");
+            linkElem.appendChild(specializationElem);
+        }
 
         // Compétences
-        const skillsElem = document.createElement('p');
-        skillsElem.textContent = item.skills.join(", ");
-        skillsElem.classList.add("education-skills");
-        linkElem.appendChild(skillsElem);
+        if (item.skills != null) {
+            const skillsElem = document.createElement('ul');
+            // skillsElem.textContent = item.skills.join(", ");
+            for (let i = 0; i < item.skills.length; i++) {
+                const linkElem = document.createElement('li');
+                linkElem.textContent = item.skills[i];
+                i != item.skills.length - 1 ? linkElem.textContent += ", " : null;
+                skillsElem.appendChild(linkElem);
+            }
+                
+            skillsElem.classList.add("education-skills");
+            linkElem.appendChild(skillsElem);
+        }
     });
 
     return educationElem;
@@ -259,7 +301,7 @@ function createSection_Education(data) {
 
 function createSection_Experience(data) {
     const icon = data.icons.experience;
-    const experienceElem = createSection(data, "Expérience", icon);
+    const experienceElem = createSection(data, i18next.t("experience"), icon);
     experienceElem.classList.add("section-experience");
 
     data.experience.forEach(item => {
@@ -308,7 +350,7 @@ function createSection_Experience(data) {
 
 function createSection_Skills(data) {
     const icon = data.icons.skills;
-    const skillsElem = createSection(data, "Compétences", icon);
+    const skillsElem = createSection(data, i18next.t("skills"), icon);
     skillsElem.classList.add("section-skills");
 
     data.skills.forEach(item => {
@@ -347,7 +389,7 @@ function createSection_Skills(data) {
 
 function createSection_Projects(data) {
     const icon = data.icons.projects;
-    const projectsElem = createSection(data, "Projets", icon);
+    const projectsElem = createSection(data, i18next.t("projects"), icon);
     projectsElem.classList.add("section-projects");
 
     data.projects.forEach(item => {
@@ -387,7 +429,7 @@ function createSection_Projects(data) {
 
 function createSection_Awards(data) {
     const icon = data.icons.awards;
-    const awardsElem = createSection(data, "Récompenses", icon);
+    const awardsElem = createSection(data, i18next.t("awards"), icon);
     awardsElem.classList.add("section-awards");
 
     data.awards.forEach(item => {
@@ -427,7 +469,7 @@ function createSection_Awards(data) {
 
 function createSection_Languages(data) {
     const icon = data.icons.languages;
-    const languagesElem = createSection(data, "Langues", icon);
+    const languagesElem = createSection(data, i18next.t("languages"), icon);
     languagesElem.classList.add("section-languages");
 
     data.languages.forEach(item => {
@@ -457,5 +499,26 @@ function createSection_Languages(data) {
 }
 
 function createFooter(data) {
-    return document.createElement('footer');
+    if (data.footer == null) { return null; }
+
+    const footerElem = document.createElement('footer');
+    footerElem.classList.add("cv-footer");
+
+    // Création du lien
+    const linkElem = document.createElement('a');
+    data.footer.link ? linkElem.href = data.footer.link : null; // if link is defined
+    footerElem.appendChild(linkElem);
+
+    // Add image to footer
+    const imageElem = document.createElement('img');
+    imageElem.src = data.footer.image;
+    imageElem.alt = "Logo";
+    linkElem.appendChild(imageElem);
+
+    // Add text to footer
+    const textElem = document.createElement('p');
+    textElem.textContent = data.footer.text;
+    linkElem.appendChild(textElem);
+
+    return footerElem;
 }

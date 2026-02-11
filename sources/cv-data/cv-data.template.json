@@ -6,10 +6,12 @@
         "lang": "fr"
     },
     "data": {
-        "name": "Jean Dupont de le Fourmillière",
+        "name": "Jean Dupont",
         "profile_picture": "https://thispersondoesnotexist.com/",
-        "cv_title": "Recherche de stage ou d'emploi dans le domaine spécifique",
-        "bio": "Ea ex veniam elit aliquip commodo. Non duis magna mollit duis aliqua minim irure id. Elit elit irure id ad deserunt. Ipsum culpa dolore et ea fugiat enim elit occaecat amet laboris tempor do exercitation.",
+        "cv_title": "Développeur Full Stack",
+        "bio": "Passionné par le développement web et les nouvelles technologies. Je suis à la recherche d'une opportunité pour mettre en pratique mes compétences.",
+        "grid_template_columns": "130fr 67fr",
+        "zoom": "120%",
         "contact": [
             {
                 "name": "Téléphone",
@@ -20,151 +22,144 @@
             {
                 "name": "Adresse",
                 "icon": "fas fa-map-marker-alt",
-                "label": "Ville (Code Postal)",
-                "url": "https://maps.app.goo.gl/linkVersAdresse"
+                "label": "Paris, France",
+                "url": "https://maps.google.com"
             },
             {
                 "name": "Email",
                 "icon": "fas fa-envelope",
-                "label": "prenom.nom@example.com",
-                "url": "mailto:prenom.nom@example.com"
+                "label": "jean.dupont@email.com",
+                "url": "mailto:jean.dupont@email.com"
             }
         ],
         "links": [
             {
                 "name": "Site personnel",
                 "icon": "fas fa-globe",
-                "label": "https://prenom.nom/",
-                "url": "https://prenom.nom/"
+                "label": "jean-dupont.com",
+                "url": "https://jean-dupont.com"
             },
             {
                 "name": "GitHub",
                 "icon": "fab fa-github",
-                "label": "/VotrePseudo",
-                "url": "https://github.com/VotrePseudo"
+                "label": "/jdupont",
+                "url": "https://github.com/jdupont"
             },
             {
                 "name": "LinkedIn",
                 "icon": "fab fa-linkedin",
-                "label": "/prenom-nom",
-                "url": "https://www.linkedin.com/in/prenom-nom/"
+                "label": "/jeandupont",
+                "url": "https://linkedin.com/in/jeandupont"
             }
         ],
         "education": [
             {
-                "institution": "Nom de l'institution Nom de l'institution Nom de l'institution Nom de l'institution",
-                "degree": "Diplôme ou cursus suivi",
-                "specialization": "Spécialisation suivie",
-                "years": "20XX - 20XX",
+                "institution": "Université de Paris",
+                "degree": "Master Informatique",
+                "specialization": "Génie Logiciel",
+                "years": "2020 - 2022",
                 "skills": [
-                    "Compétence 1",
-                    "Compétence 2",
-                    "Compétence 3"
-                ]
-            },
-            {
-                "institution": "Nom de l'institution",
-                "degree": "Diplôme ou cursus suivi",
-                "specialization": "Spécialisation suivie",
-                "years": "20XX - 20XX",
-                "skills": [
-                    "Compétence 1",
-                    "Compétence 2",
-                    "Compétence 3",
-                    "Compétence 4"
+                    "Architecture Logicielle",
+                    "Gestion de projet",
+                    "Agile/Scrum"
                 ],
                 "mention": "Bien"
             },
             {
-                "institution": "Nom de l'institution",
-                "degree": "Diplôme ou cursus suivi",
-                "years": "20XX - 20XX",
+                "institution": "Université de Lyon",
+                "degree": "Licence Informatique",
+                "years": "2017 - 2020",
                 "skills": [
-                    "Compétence 1",
-                    "Compétence 2"
-                ],
-                "mention": "Très bien"
+                    "Algorithmique",
+                    "Bases de données",
+                    "Web"
+                ]
             }
         ],
         "experience": [
             {
-                "company": "Nom de l'entreprise Nom de l'entreprise Nom de l'entreprise Nom de l'entreprise",
-                "position": "Alternance",
+                "company": "Tech Solutions",
+                "position": "Développeur Front-End",
                 "tasks": [
-                    "Tâche 1",
-                    "Tâche 2",
-                    "Tâche 3",
-                    "Tâche 4",
-                    "Tâche 5"
+                    "Développement d'interfaces utilisateur avec React",
+                    "Optimisation des performances web",
+                    "Collaboration avec les designers et le backend"
                 ],
-                "date": "Période"
+                "date": "2022 - Présent"
             },
             {
-                "company": "Nom de l'entreprise",
-                "position": "Stage",
+                "company": "Web Agency",
+                "position": "Stagiaire Développeur Web",
                 "tasks": [
-                    "Tâche 1",
-                    "Tâche 2",
-                    "Tâche 3"
+                    "Intégration de maquettes HTML/CSS",
+                    "Maintenance de sites WordPress"
                 ],
-                "date": "Période"
+                "date": "Été 2021"
             }
         ],
-        "skills": {
-            "operating_systems": [
-                "Système 1",
-                "Système 2"
-            ],
-            "technical_skills": [
-                "Compétence technique 1",
-                "Compétence technique 2",
-                "Compétence technique 3",
-                "Compétence technique 4"
-            ],
-            "software": [
-                "Logiciel 1",
-                "Logiciel 2",
-                "Logiciel 3",
-                "Logiciel 4",
-                "Logiciel 5",
-                "Logiciel 6",
-                "Logiciel 7"
-            ]
-        },
-        "projects": [
+        "skills": [
             {
-                "name": "Nom du projet 1 Nom du projet 1 Nom du projet 1 Nom du projet 1 ",
-                "description": "Brève description du projet et de son impact ou résultat.",
-                "date": "Période",
-                "link": "https://lienVersProjet.com"
+                "title": "Langages",
+                "skill_list": [
+                    {
+                        "name": "JavaScript",
+                        "link": "https://developer.mozilla.org/fr/docs/Web/JavaScript"
+                    },
+                    {
+                        "name": "Python"
+                    },
+                    {
+                        "name": "Java"
+                    }
+                ]
             },
             {
-                "name": "Nom du projet 2",
-                "description": "Brève description du projet et de son impact ou résultat.",
-                "date": "Période",
-                "link": "https://lienVersProjet.com"
+                "title": "Frameworks & Outils",
+                "skill_list": [
+                    {
+                        "name": "React"
+                    },
+                    {
+                        "name": "Node.js"
+                    },
+                    {
+                        "name": "Git"
+                    }
+                ]
+            }
+        ],
+        "projects": [
+            {
+                "name": "Portfolio Personnel",
+                "description": "Site web personnel présentant mes projets et compétences.",
+                "date": "2023",
+                "link": "https://jean-dupont.com"
+            },
+            {
+                "name": "Application de To-Do List",
+                "description": "Une application simple de gestion de tâches réalisée avec Vue.js.",
+                "date": "2022",
+                "link": "https://github.com/jdupont/todo-app"
             }
         ],
         "awards": [
             {
-                "name": "Nom du concours ou de la distinction Nom du concours ou de la distinction",
-                "achievement": "Description de la réalisation ou du classement",
-                "year": "Année",
-                "link": "https://lienVersDistinction.com"
-            },
-            {
-                "name": "Nom du concours ou de la distinction",
-                "achievement": "Description de la réalisation ou du classement",
-                "year": "Année",
-                "link": "https://lienVersDistinction.com"
+                "name": "Hackathon 2021",
+                "achievement": "2ème place pour le meilleur projet innovant",
+                "year": "2021"
             }
         ],
-        "languages": {
-            "Langue 1": "Niveau de maîtrise",
-            "Langue 2": "Niveau de maîtrise",
-            "Langue 3 Langue 3 Langue 3 ": "Niveau de maîtrise",
-            "Langue 4": "Niveau de maîtrise Niveau de maîtrise Niveau de maîtrise "
-        },
+        "languages": [
+            {
+                "name": "Langue 1",
+                "proficiency": "Niveau de maîtrise"
+            },
+            {
+                "name": "Langue 2",
+                "proficiency": "Niveau de maîtrise",
+                "certificate": "Certificat (Optionnel)"
+            }
+        ],
         "icons": {
             "education": "fas fa-graduation-cap",
             "experience": "fas fa-briefcase",

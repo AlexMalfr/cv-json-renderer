@@ -2,7 +2,7 @@
 .cv-body {
     font-family: "Red Hat Display";
     display: grid;
-    grid-template-columns: 75fr 35fr;
+    grid-template-columns: 2fr 1fr;
     padding: 15px;
     height: 100%;
 }

@@ -14,6 +14,27 @@ function displayCV(data) {
 
     const cvBody = document.createElement('div');
     cvBody.classList.add("cv-body");
+    if (data.grid_template_columns) {
+        cvBody.style.gridTemplateColumns = data.grid_template_columns;
+    }
+    
+    // Handle zoom
+    if (data.zoom) {
+        let zoomVal = data.zoom;
+        if (typeof zoomVal === 'string' && zoomVal.includes('%')) {
+            zoomVal = parseFloat(zoomVal) / 100;
+        } else {
+            zoomVal = parseFloat(zoomVal);
+        }
+
+        if (zoomVal && !isNaN(zoomVal) && zoomVal !== 1) {
+            cvContainer.style.zoom = zoomVal;
+            // Compensate width and height to maintain A4 visual size
+            cvContainer.style.width = `calc(210mm / ${zoomVal})`;
+            cvContainer.style.height = `calc(297mm / ${zoomVal})`;
+        }
+    }
+
     cvContainer.appendChild(cvBody);
 
     // // create two colums
@@ -139,6 +160,7 @@ function createListWithIcons(data, listClass, right = false) {
         const listItemAnchor = document.createElement('a');
         listItemAnchor.title = item.name;
         listItemAnchor.href = item.url;
+        listItemAnchor.target = "_blank";
 
         const listItemElem = document.createElement('p');
         listItemElem.textContent = item.label;
@@ -192,7 +214,10 @@ function createSection_Education(data) {
         educationElem.appendChild(educationItemElem);
 
         const linkElem = document.createElement('a');
-        if (item.link) linkElem.href = item.link; // if link is defined
+        if (item.link) {
+            linkElem.href = item.link; // if link is defined
+            linkElem.target = "_blank";
+        }
         educationItemElem.appendChild(linkElem);
 
         const titleElem = document.createElement('div');
@@ -263,7 +288,10 @@ function createSection_Experience(data) {
         experienceElem.appendChild(experienceItemElem);
 
         const linkElem = document.createElement('a');
-        if (item.link) linkElem.href = item.link; // if link is defined
+        if (item.link) {
+            linkElem.href = item.link; // if link is defined
+            linkElem.target = "_blank";
+        }
         experienceItemElem.appendChild(linkElem);
 
         const titleElem = document.createElement('div');
@@ -321,6 +349,7 @@ function createSection_Skills(data) {
             const linkElem = document.createElement('a');
             if (item.skill_list[i].link) {
                 linkElem.href = item.skill_list[i].link;
+                linkElem.target = "_blank";
             }
             linkElem.textContent = item.skill_list[i].name;
             if (i !== item.skill_list.length - 1) linkElem.textContent += ", ";
@@ -344,7 +373,10 @@ function createSection_Projects(data) {
         projectsElem.appendChild(projectItemElem);
 
         const linkElem = document.createElement('a');
-        if (item.link) linkElem.href = item.link; // if link is defined
+        if (item.link) {
+            linkElem.href = item.link; // if link is defined
+            linkElem.target = "_blank";
+        }
         projectItemElem.appendChild(linkElem);
 
         const titleElem = document.createElement('div');
@@ -378,6 +410,7 @@ function createSection_Awards(data) {
     data.awards.forEach(item => {
         const linkElem = document.createElement('a');
         linkElem.href = item.link;
+        linkElem.target = "_blank";
         awardsElem.appendChild(linkElem);
 
         const awardItemElem = document.createElement('div');
@@ -418,7 +451,10 @@ function createSection_Languages(data) {
         languagesElem.appendChild(languageItemElem);
 
         const linkElem = document.createElement('a');
-        if (item.link) linkElem.href = item.link; // if link is defined
+        if (item.link) {
+            linkElem.href = item.link; // if link is defined
+            linkElem.target = "_blank";
+        }
         languageItemElem.appendChild(linkElem);
 
         const firstRowElem = document.createElement('div');
@@ -452,7 +488,10 @@ function createFooter(data) {
     footerElem.classList.add("cv-footer");
 
     const linkElem = document.createElement('a');
-    if (data.footer.link) linkElem.href = data.footer.link; // if link is defined
+    if (data.footer.link) {
+        linkElem.href = data.footer.link; // if link is defined
+        linkElem.target = "_blank";
+    }
     footerElem.appendChild(linkElem);
 
     const imageElem = document.createElement('img');

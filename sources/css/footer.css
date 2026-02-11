@@ -1,0 +1,38 @@
+.cv-footer {
+    background-color: #f5f5f5;
+    padding: 0.05px;
+    border-top: 2px solid #ddd;
+    text-align: center;
+    font-family: "Kanit", sans-serif;
+    padding-block: 10px;
+    padding-inline: 25px;
+    padding-bottom: 17px;
+}
+
+.cv-footer a {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cv-footer img {
+    height: 40px;
+}
+
+.cv-footer p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+@media print {
+    .cv-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+}

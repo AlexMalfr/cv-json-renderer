@@ -1,5 +1,5 @@
-sources/*.json
-!sources/cv-data.template.json
+sources/cv-data/*.json
+!sources/cv-data/cv-data.template.json
 sources/images/*
 sources/css/lib/fontawesome-*
 !**/.gitkeep

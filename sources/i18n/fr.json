@@ -1,3 +1,8 @@
 {
-    "name": "Nom"
+    "education": "Éducation",
+    "experience": "Expérience",
+    "skills": "Compétences",
+    "projects": "Projets",
+    "languages": "Langues",
+    "awards": "Récompenses"
 }

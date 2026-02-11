@@ -1,89 +1,8 @@
-function loadI18n() {
-    let langs = ['en', 'fr'];
-    let translations = {};
-    let promises = langs.map(lang => {
-        return new Promise((resolve, reject) => {
-            let fileURL = "sources/i18n/" + lang + ".json";
-            let request = new XMLHttpRequest();
-            request.open("GET", fileURL, true);
-            request.responseType = "json";
-            request.onload = function () {
-                if (request.status >= 200 && request.status < 300) {
-                    translations[lang] = { "translation": request.response };
-                    resolve();
-                } else {
-                    reject(new Error('Request failed: ' + request.statusText));
-                }
-            };
-            request.onerror = function () {
-                reject(new Error('Network error'));
-            };
-            request.send();
-        });
-    });
-
-    return Promise.all(promises).then(() => translations);
-}
-
-function initI18n(translations, lang='fr') {
-    i18next.init({
-        lng: lang,
-        resources: translations,
-        // debug: true
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    loadI18n().then(translations => {
-        initI18n(translations);
-    }).catch(error => console.error('Failed to load translations:', error));
-
-    // load JSON data from a file
-    // let fileURL = "sources/cv-data/cv-data.template.json";
-    let fileURL = "sources/cv-data/cv-data.json";
-
-    // get fileURL from the query string (if it exists)
-    let urlParams = new URLSearchParams(window.location.search);
-    let fileParam = urlParams.get('file');
-    if (fileParam != null) {
-        fileURL = fileParam;
-    }
-
-    let cvData = loadJSON(fileURL);
-});
-
-function loadJSON(fileURL) {
-    let request = new XMLHttpRequest();
-    request.open("GET", fileURL, true);
-    request.responseType = "json";
-    request.send();
-
-    console.log("loading JSON data");
-
-    request.onload = function () {
-        console.log("JSON data loaded");
-        jsonData = request.response;
-        meta = jsonData.meta;
-        cvData = jsonData.data;
-        console.log(cvData);
-
-        displayCV(cvData);
-
-        // Change favicon and title from the JSON data
-        document.title = `${cvData.name} - CV ${cvData.meta.title}`;
-        let favicon = document.getElementById('favicon');
-        favicon.href = cvData.profile_picture;
-    };
-    
-    request.onloadend = function () {
-        let title = document.getElementById('title');
-        title.textContent = `${cvData.name} - CV`;
-    }
-};
+// renderer.js - all DOM creation to render the CV
 
 function displayCV(data) {
     const cvContainer = document.getElementById('cv');
-    
+
     // empty the container
     while (cvContainer.firstChild) {
         cvContainer.removeChild(cvContainer.firstChild);
@@ -97,47 +16,75 @@ function displayCV(data) {
     cvBody.classList.add("cv-body");
     cvContainer.appendChild(cvBody);
 
-    // create two colums
-    const leftColumn = document.createElement('div');
-    leftColumn.classList.add("left-column");
-    cvBody.appendChild(leftColumn);
+    // // create two colums
+    // const leftColumn = document.createElement('div');
+    // leftColumn.classList.add("left-column");
+    // cvBody.appendChild(leftColumn);
 
-    const rightColumn = document.createElement('div');
-    rightColumn.classList.add("right-column");
-    cvBody.appendChild(rightColumn);
+    // const rightColumn = document.createElement('div');
+    // rightColumn.classList.add("right-column");
+    // cvBody.appendChild(rightColumn);
 
-    // Add education, experience and skills to left column
-    leftColumn.appendChild(createSection_Education(data));
-    leftColumn.appendChild(createSection_Experience(data));
-    leftColumn.appendChild(createSection_Awards(data));
-    rightColumn.appendChild(createSection_Projects(data));
-    rightColumn.appendChild(createSection_Skills(data));
-    rightColumn.appendChild(createSection_Languages(data));
+    // // Add education, experience and skills to left column
+    // leftColumn.appendChild(createSection_Education(data));
+    // leftColumn.appendChild(createSection_Experience(data));
+    // leftColumn.appendChild(createSection_Awards(data));
+    // rightColumn.appendChild(createSection_Projects(data));
+    // rightColumn.appendChild(createSection_Skills(data));
+    // rightColumn.appendChild(createSection_Languages(data));
 
-    let footer = createFooter(data);
+    const columns_sections = [
+        [createSection_Education(data),  0],
+        [createSection_Experience(data), 0],
+        [createSection_Awards(data),     0],
+        [createSection_Projects(data),   1],
+        [createSection_Skills(data),     1],
+        [createSection_Languages(data),  1],
+    ];
+
+    // Create columns (not necessarily two columns, created depending on sections data)
+    const columns = {};
+    columns_sections.forEach(([section, colIndex]) => {
+        if (section == null) return; // skip empty sections
+        if (!columns[colIndex]) {
+            columns[colIndex] = document.createElement('div');
+            columns[colIndex].classList.add("column");
+            cvBody.appendChild(columns[colIndex]);
+        }
+        columns[colIndex].appendChild(section);
+    });
+
+    // Create footer
+    const footer = createFooter(data);
     if (footer != null) {
         cvContainer.appendChild(footer);
     }
 }
-
-
 
 /* ---------- Header ---------- */
 
 function createHeader(data) {
     const headerElem = document.createElement('header');
     headerElem.classList.add("cv-header");
-    
+
     // Add photo and name to header
     const photoAndNameElem = createPhotoAndName(data);
     headerElem.appendChild(photoAndNameElem);
-
+    
     // Add contact information to header
     const contactAndLinksElem = document.createElement('div');
     contactAndLinksElem.classList.add("contact-and-links");
     contactAndLinksElem.appendChild(createLinks(data, false));
     contactAndLinksElem.appendChild(createContact(data, true));
     headerElem.appendChild(contactAndLinksElem);
+
+    // Add summary to header
+    if (data.text != null) {
+        const summaryElem = document.createElement('p');
+        summaryElem.classList.add("summary");
+        summaryElem.textContent = data.text;
+        headerElem.appendChild(summaryElem);
+    }
 
     return headerElem;
 }
@@ -152,7 +99,7 @@ function createPhotoAndName(data) {
     photoElem.alt = "Profile photo";
     photoAndNameElem.appendChild(photoElem);
 
-    rightElem = document.createElement('div');
+    const rightElem = document.createElement('div');
     rightElem.classList.add("right");
 
     // Add name to header
@@ -160,26 +107,31 @@ function createPhotoAndName(data) {
     nameElem.textContent = data.name;
     rightElem.appendChild(nameElem);
 
-    // Add objective to header
-    const bioElem = document.createElement('p');
-    bioElem.classList.add("bio");
-    bioElem.textContent = data.bio;
-    rightElem.appendChild(bioElem);
+    // Add objective to header (split into multiple lines for every \n)
+    if (data.bio != null) {
+        const bioLines = data.bio.split("\n");
+        bioLines.forEach(line => {
+            const bioElem = document.createElement('p');
+            bioElem.classList.add("bio");
+            bioElem.textContent = line;
+            rightElem.appendChild(bioElem);
+        });
+    }
 
     photoAndNameElem.appendChild(rightElem);
 
     return photoAndNameElem;
 }
 
-function createLinks(data, right=false) {
+function createLinks(data, right = false) {
     return createListWithIcons(data.links, "links", right);
 }
 
-function createContact(data, right=true) {
+function createContact(data, right = true) {
     return createListWithIcons(data.contact, "contact", right);
 }
 
-function createListWithIcons(data, listClass, right=false) {
+function createListWithIcons(data, listClass, right = false) {
     const listElem = document.createElement('address');
     listElem.classList.add(listClass);
 
@@ -187,11 +139,11 @@ function createListWithIcons(data, listClass, right=false) {
         const listItemAnchor = document.createElement('a');
         listItemAnchor.title = item.name;
         listItemAnchor.href = item.url;
-        
+
         const listItemElem = document.createElement('p');
         listItemElem.textContent = item.label;
         listItemAnchor.appendChild(listItemElem);
-        
+
         listElem.appendChild(listItemAnchor);
 
         const iconElem = document.createElement('i');
@@ -207,11 +159,9 @@ function createListWithIcons(data, listClass, right=false) {
     return listElem;
 }
 
-
-
 /* ---------- Sections ---------- */
 
-function createSection(data, title, icon) {
+function createSection(title, icon) {
     const sectionElem = document.createElement('section');
     sectionElem.classList.add("section");
 
@@ -230,23 +180,21 @@ function createSection(data, title, icon) {
 }
 
 function createSection_Education(data) {
-    const icon = data.icons.education;
-    const educationElem = createSection(data, i18next.t("education"), icon);
+    if (data.education == null || data.education.length === 0) return null;
+
+    const icon = "fas fa-graduation-cap";
+    const educationElem = createSection(i18next.t("education"), icon);
     educationElem.classList.add("section-education");
 
     data.education.forEach(item => {
-        // Création de l'élément
         const educationItemElem = document.createElement('div');
-        educationItemElem.classList.add("education-item");
-        educationItemElem.classList.add("item");
+        educationItemElem.classList.add("education-item", "item");
         educationElem.appendChild(educationItemElem);
 
-        // Création du lien
         const linkElem = document.createElement('a');
-        item.link ? linkElem.href = item.link : null; // if link is defined
+        if (item.link) linkElem.href = item.link; // if link is defined
         educationItemElem.appendChild(linkElem);
 
-        // Titre et date
         const titleElem = document.createElement('div');
         titleElem.classList.add("title-elem");
         linkElem.appendChild(titleElem);
@@ -254,25 +202,25 @@ function createSection_Education(data) {
         const institutionElem = document.createElement('h3');
         institutionElem.textContent = item.institution;
         titleElem.appendChild(institutionElem);
-        
-        // Date
+
         if (item.years != null) {
             const yearsElem = document.createElement('p');
             yearsElem.classList.add("date");
             yearsElem.textContent = item.years;
             titleElem.appendChild(yearsElem);
         }
-        
-        // Diplôme
+
         if (item.degree != null) {
             const degreeElem = document.createElement('p');
-            degreeElem.textContent = item.degree + (item.mention ? ` (Mention "${item.mention}")` : "") // fr
-            // degreeElem.textContent = item.degree + (item.mention ? ` - ${item.mention}` : "") // en
+            if (document.documentElement.lang === 'fr') {
+                degreeElem.textContent = item.degree + (item.mention ? ` (Mention "${item.mention}")` : "");
+            } else {
+                degreeElem.textContent = item.degree + (item.mention ? ` - ${item.mention}` : "");
+            }
             degreeElem.classList.add("education-degree");
             linkElem.appendChild(degreeElem);
         }
 
-        // Spécialisation
         if (item.specialization != null) {
             const specializationElem = document.createElement('p');
             specializationElem.textContent = item.specialization;
@@ -280,17 +228,20 @@ function createSection_Education(data) {
             linkElem.appendChild(specializationElem);
         }
 
-        // Compétences
         if (item.skills != null) {
-            const skillsElem = document.createElement('ul');
-            // skillsElem.textContent = item.skills.join(", ");
-            for (let i = 0; i < item.skills.length; i++) {
-                const linkElem = document.createElement('li');
-                linkElem.textContent = item.skills[i];
-                i != item.skills.length - 1 ? linkElem.textContent += ", " : null;
-                skillsElem.appendChild(linkElem);
+            let skillsElem;
+            if (item.skills.length == 1) {
+                skillsElem = document.createElement('p');
+                skillsElem.textContent = item.skills[0];
+            } else {
+                skillsElem = document.createElement('ul');
+                for (let i = 0; i < item.skills.length; i++) {
+                    const liElem = document.createElement('li');
+                    liElem.textContent = item.skills[i];
+                    if (i !== item.skills.length - 1) liElem.textContent += ", ";
+                    skillsElem.appendChild(liElem);
+                }
             }
-                
             skillsElem.classList.add("education-skills");
             linkElem.appendChild(skillsElem);
         }
@@ -300,23 +251,21 @@ function createSection_Education(data) {
 }
 
 function createSection_Experience(data) {
-    const icon = data.icons.experience;
-    const experienceElem = createSection(data, i18next.t("experience"), icon);
+    if (data.experience == null || data.experience.length === 0) return null;
+
+    const icon = "fas fa-briefcase";
+    const experienceElem = createSection(i18next.t("experience"), icon);
     experienceElem.classList.add("section-experience");
 
     data.experience.forEach(item => {
-        // Création de l'élément
         const experienceItemElem = document.createElement('div');
-        experienceItemElem.classList.add("experience-item");
-        experienceItemElem.classList.add("item");
+        experienceItemElem.classList.add("experience-item", "item");
         experienceElem.appendChild(experienceItemElem);
 
-        // Création du lien
         const linkElem = document.createElement('a');
-        item.link ? linkElem.href = item.link : null; // if link is defined
+        if (item.link) linkElem.href = item.link; // if link is defined
         experienceItemElem.appendChild(linkElem);
 
-        // Titre et date
         const titleElem = document.createElement('div');
         titleElem.classList.add("title-elem");
         linkElem.appendChild(titleElem);
@@ -324,19 +273,17 @@ function createSection_Experience(data) {
         const companyElem = document.createElement('h3');
         companyElem.textContent = item.company;
         titleElem.appendChild(companyElem);
-        
+
         const dateElem = document.createElement('p');
         dateElem.classList.add("date");
         dateElem.textContent = item.date;
         titleElem.appendChild(dateElem);
 
-        // Poste
         const positionElem = document.createElement('p');
         positionElem.textContent = item.position;
         positionElem.classList.add("experience-position");
         linkElem.appendChild(positionElem);
 
-        // Description
         if (item.tasks != null) {
             const tasksElem = document.createElement('p');
             tasksElem.textContent = item.tasks.join(", ");
@@ -349,18 +296,17 @@ function createSection_Experience(data) {
 }
 
 function createSection_Skills(data) {
-    const icon = data.icons.skills;
-    const skillsElem = createSection(data, i18next.t("skills"), icon);
+    if (data.skills == null || data.skills.length === 0) return null;
+
+    const icon = "fas fa-cogs";
+    const skillsElem = createSection(i18next.t("skills"), icon);
     skillsElem.classList.add("section-skills");
 
     data.skills.forEach(item => {
-        // Création de l'élément
         const skillsItem = document.createElement('div');
-        skillsItem.classList.add("skills-item")
-        skillsItem.classList.add("item")
+        skillsItem.classList.add("skills-item", "item");
         skillsElem.appendChild(skillsItem);
-        
-        // Titre de la catégorie
+
         const titleElem = document.createElement('div');
         titleElem.classList.add("title-elem");
         skillsItem.appendChild(titleElem);
@@ -368,18 +314,16 @@ function createSection_Skills(data) {
         const skillsTitleElem = document.createElement('h3');
         skillsTitleElem.textContent = item.title;
         titleElem.appendChild(skillsTitleElem);
-        
-        // Liste des compétences
+
         const skillListElem = document.createElement('p');
         skillsItem.appendChild(skillListElem);
         for (let i = 0; i < item.skill_list.length; i++) {
             const linkElem = document.createElement('a');
             if (item.skill_list[i].link) {
-                // if link is defined
                 linkElem.href = item.skill_list[i].link;
             }
             linkElem.textContent = item.skill_list[i].name;
-            i != item.skill_list.length - 1 ? linkElem.textContent += ", " : null;
+            if (i !== item.skill_list.length - 1) linkElem.textContent += ", ";
             skillListElem.appendChild(linkElem);
         }
     });
@@ -388,23 +332,21 @@ function createSection_Skills(data) {
 }
 
 function createSection_Projects(data) {
-    const icon = data.icons.projects;
-    const projectsElem = createSection(data, i18next.t("projects"), icon);
+    if (data.projects == null || data.projects.length === 0) return null;
+
+    const icon = "fas fa-project-diagram";
+    const projectsElem = createSection(i18next.t("projects"), icon);
     projectsElem.classList.add("section-projects");
 
     data.projects.forEach(item => {
-        // Création de l'élément
         const projectItemElem = document.createElement('div');
-        projectItemElem.classList.add("project-item");
-        projectItemElem.classList.add("item");
+        projectItemElem.classList.add("project-item", "item");
         projectsElem.appendChild(projectItemElem);
 
-        // Lien
         const linkElem = document.createElement('a');
-        item.link ? linkElem.href = item.link : null; // if link is defined
+        if (item.link) linkElem.href = item.link; // if link is defined
         projectItemElem.appendChild(linkElem);
 
-        // Titre et date
         const titleElem = document.createElement('div');
         titleElem.classList.add("title-elem");
         linkElem.appendChild(titleElem);
@@ -418,7 +360,6 @@ function createSection_Projects(data) {
         dateElem.textContent = item.date;
         titleElem.appendChild(dateElem);
 
-        // Description
         const descriptionElem = document.createElement('p');
         descriptionElem.textContent = item.description;
         linkElem.appendChild(descriptionElem);
@@ -428,23 +369,21 @@ function createSection_Projects(data) {
 }
 
 function createSection_Awards(data) {
-    const icon = data.icons.awards;
-    const awardsElem = createSection(data, i18next.t("awards"), icon);
+    if (data.awards == null || data.awards.length === 0) return null;
+    
+    const icon = "fas fa-award";
+    const awardsElem = createSection(i18next.t("awards"), icon);
     awardsElem.classList.add("section-awards");
 
     data.awards.forEach(item => {
-        // Création du lien
         const linkElem = document.createElement('a');
         linkElem.href = item.link;
         awardsElem.appendChild(linkElem);
 
-        // Création de l'élément
         const awardItemElem = document.createElement('div');
-        awardItemElem.classList.add("award-item");
-        awardItemElem.classList.add("item");
+        awardItemElem.classList.add("award-item", "item");
         linkElem.appendChild(awardItemElem);
 
-        // Titre et date
         const titleElem = document.createElement('div');
         titleElem.classList.add("title-elem");
         awardItemElem.appendChild(titleElem);
@@ -458,7 +397,6 @@ function createSection_Awards(data) {
         yearElem.textContent = item.year;
         titleElem.appendChild(yearElem);
 
-        // Description
         const achievementElem = document.createElement('p');
         achievementElem.textContent = item.achievement;
         awardItemElem.appendChild(achievementElem);
@@ -468,54 +406,60 @@ function createSection_Awards(data) {
 }
 
 function createSection_Languages(data) {
-    const icon = data.icons.languages;
-    const languagesElem = createSection(data, i18next.t("languages"), icon);
+    if (data.languages == null || data.languages.length === 0) return null;
+
+    const icon = "fas fa-language";
+    const languagesElem = createSection(i18next.t("languages"), icon);
     languagesElem.classList.add("section-languages");
 
     data.languages.forEach(item => {
-        // Création du lien
-        const linkElem = document.createElement('a');
-        item.link ? linkElem.href = item.link : null; // if link is defined
-        languagesElem.appendChild(linkElem);
-        
-        // Création de l'élément
         const languageItemElem = document.createElement('div');
-        languageItemElem.classList.add("language-item");
-        languageItemElem.classList.add("item");
-        linkElem.appendChild(languageItemElem);
+        languageItemElem.classList.add("language-item", "item");
+        languagesElem.appendChild(languageItemElem);
 
-        // Langue
+        const linkElem = document.createElement('a');
+        if (item.link) linkElem.href = item.link; // if link is defined
+        languageItemElem.appendChild(linkElem);
+
+        const firstRowElem = document.createElement('div');
+        firstRowElem.classList.add("title-elem");
+        linkElem.appendChild(firstRowElem);
+
         const languageElem = document.createElement('h3');
         languageElem.textContent = item.name;
-        languageItemElem.appendChild(languageElem);
+        firstRowElem.appendChild(languageElem);
 
-        // Niveau
         const proficiencyElem = document.createElement('p');
         proficiencyElem.textContent = item.proficiency;
-        languageItemElem.appendChild(proficiencyElem);
+        proficiencyElem.classList.add("language-proficiency");
+        firstRowElem.appendChild(proficiencyElem);
+
+        if (item.certificate != null) {
+            const certificateElem = document.createElement('p');
+            certificateElem.textContent = item.certificate;
+            certificateElem.classList.add("language-certificate");
+            languageItemElem.appendChild(certificateElem);
+        }
     });
 
     return languagesElem;
 }
 
 function createFooter(data) {
-    if (data.footer == null) { return null; }
+    if (data.footer == null || data.footer.length === 0) return null;
 
     const footerElem = document.createElement('footer');
     footerElem.classList.add("cv-footer");
 
-    // Création du lien
     const linkElem = document.createElement('a');
-    data.footer.link ? linkElem.href = data.footer.link : null; // if link is defined
+    if (data.footer.link) linkElem.href = data.footer.link; // if link is defined
     footerElem.appendChild(linkElem);
 
-    // Add image to footer
     const imageElem = document.createElement('img');
     imageElem.src = data.footer.image;
     imageElem.alt = "Logo";
     linkElem.appendChild(imageElem);
 
-    // Add text to footer
     const textElem = document.createElement('p');
     textElem.textContent = data.footer.text;
     linkElem.appendChild(textElem);

@@ -1,5 +1,6 @@
 @import './header.css';
 @import './body.css';
+@import './footer.css';
 
 /* fonts */
 @import url('https://fonts.googleapis.com/css?family=Kanit:300,400,500,700,900');
@@ -11,6 +12,13 @@
     line-height: 1.5;
     color: #333;
     background: #fff;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 0;
+    margin: 0;
 }
 
 @media screen {
@@ -25,29 +33,29 @@
         background: #f0f0f0;
     }
 
-    body>*:not(#cv) {
+    body>*:not(#cv-container) {
         text-align: center;
-        padding-inline: 100px;
+        padding-inline: min(100px, 10%);
         font-family: "Kanit", sans-serif;
     }
 
-    body>*:not(#cv) p {
+    body>*:not(#cv-container) p {
         color: #333;
         line-height: 0.8em;
         text-align: justify;
     }
 
-    body>*:not(#cv) a {
+    body>*:not(#cv-container) a {
         color: #888;
         font-style: italic;
         font-weight: lighter;
-        font-size: 0.9em;
+        /* font-size: 0.9em; */
         padding: 5px;
     }
 
-    body>*:not(#cv) button {
+    body>*:not(#cv-container) button {
         display: inline-block;
-        margin-block: 20px;
+        margin-block: 5px;
         margin-inline: 10px;
         padding: 10px 30px;
         border-radius: 0;
@@ -58,7 +66,7 @@
         text-decoration: none;
     }
 
-    body>*:not(#cv) button:hover {
+    body>*:not(#cv-container) button:hover {
         background-color: #000;
         color: #FFF;
         transition-property: background-color, color;
@@ -66,19 +74,51 @@
         transition-timing-function: ease-in-out;
     }
 
+    body>*:not(#cv-container) select,
+    body>*:not(#cv-container) input {
+        margin-block: 5px;
+        margin-inline: 10px;
+        padding-inline: 20px;
+        height: 100%;
+        border-radius: 0;
+        border: 2px solid #000;
+        font-size: 1.1em;
+    }
+
+    /* selector for the list of options of the select */
+    body>*:not(#cv-container) select option {
+        border-radius: 0;
+        border: 2px solid #000;
+        font-size: 0.9em;
+    }
+
+    #cv-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding-block: 30px;
+        padding-inline: 30px;
+        overflow-x: scroll;
+    }
+
+    #cv-container::-webkit-scrollbar {
+        display: none;
+    }
+    
     #cv {
         /* Mimic an A4 paper */
         box-sizing: border-box;
         width: 210mm;
         height: 297mm;
-        overflow: visible;
+        overflow-y: hidden;
 
         /* Placing the A4 paper in the middle with some shadow */
         box-shadow: -5px 0mm 4mm 3px rgba(0, 0, 0, 0.1);
-        margin: 10mm;
+        margin-inline: auto;
 
         /* Ensure scaling happens from the top center */
         transform-origin: top center;
+        transform: scale(1);
     }
 }
 
@@ -89,14 +129,14 @@
     }
 
     /* Hide everything else except the CV */
-    body>*:not(#cv) {
+    body>*:not(#cv-container) {
         display: none;
     }
 
     @page {
         /* Remove default margin to use custom margin that we set in #cv
         (to match the web version) */
-        margin: -10px;
+        margin: -2mm;
         padding: 0;
         size: A4;
     }

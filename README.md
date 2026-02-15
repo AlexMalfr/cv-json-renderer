@@ -36,16 +36,14 @@ You can find my CV on [this page](https://alexandre.malfre.yt/cv) of my personal
 > 
 > (It does not need to be a Python server, any local server will work, but the included `start-server.bat` uses Python for simplicity)
 
-1.  **Prerequisites**:
-    *   **Python** installed to run the local server.
-    *   **FontAwesome**: Download and install FontAwesome (see [Icons](#-icons-fontawesome) section below).
+1.  **Prerequisites**: You need Python installed to run the local server.
 2.  **Start the Server**: Double-click on `start-server.bat`. This will start a local web server and open your default browser to `http://localhost:8080`.
 3.  **Choose your CV**: Use the dropdown menu at the top of the page to select a JSON file from the `sources/cv-data/` directory.
 
 ### 🚀 How to deploy (online)
 
 1.  **Prerequisites**: You need a web server capable of serving static files (via FTP, SFTP, or a web hosting service).
-2.  **Deployment**: Copy all the project files (including the FontAwesome folder you added) into the root directory of your web server.
+2.  **Deployment**: Copy all the project files into the root directory of your web server.
 
 ### 📝 Editing Data
 
@@ -55,11 +53,9 @@ You can find my CV on [this page](https://alexandre.malfre.yt/cv) of my personal
 
 ### 🎨 Icons (FontAwesome)
 
-This generator uses **FontAwesome** for icons. The library is **not included** in the repository and must be added manually.
-
-1.  **Download**: Get FontAwesome Free (or Pro) from [fontawesome.com](https://fontawesome.com/download).
-2.  **Install**: Extract the files into `sources/css/lib/`. See [sources/css/lib/README.md](sources/css/lib/README.md) for details.
-3.  **Use**: Add the icon class to your JSON file (e.g., `"icon": "fas fa-phone"`).
+This generator uses **FontAwesome** for icons. You can use any icon class from the included library directly.
+*   Browse icons on [FontAwesome.com](https://fontawesome.com/search) (look for version 6 or compatible).
+*   Add the icon class to your JSON file (e.g., `"icon": "fas fa-phone"`).
 
 ---
 
@@ -78,16 +74,14 @@ Vous pouvez trouver mon CV sur [cette page](https://alexandre.malfre.yt/cv) de m
 > 
 > (Il n'est pas nécessaire que ce soit un serveur Python, n'importe quel serveur local fonctionnera, mais le `start-server.bat` inclus utilise Python pour la simplicité)
 
-1.  **Prérequis** :
-    *   **Python** installé pour lancer le serveur local.
-    *   **FontAwesome** : Téléchargez et installez FontAwesome (voir la section [Icônes](#-icônes-fontawesome) ci-dessous).
+1.  **Prérequis** : Vous avez besoin de Python installé pour lancer le serveur local.
 2.  **Lancer le serveur** : Double-cliquez sur `start-server.bat`. Cela démarrera un serveur web local et ouvrira votre navigateur par défaut sur `http://localhost:8080`.
 3.  **Choisir votre CV** : Utilisez le menu déroulant en haut de la page pour sélectionner un fichier JSON dans le dossier `sources/cv-data/`.
 
 ### 🚀 Comment déployer (en ligne)
 
 1.  **Prérequis** : Vous devez avoir un serveur web capable de servir les fichiers statiques (via FTP, SFTP, ou un service d'hébergement web).
-2.  **Déploiement** : Copiez tous les fichiers du projet (y compris le dossier FontAwesome que vous avez ajouté) dans le répertoire racine de votre serveur web.
+2.  **Déploiement** : Copiez tous les fichiers du projet dans le répertoire racine de votre serveur web.
 
 ### 📝 Édition des données
 
@@ -97,8 +91,6 @@ Vous pouvez trouver mon CV sur [cette page](https://alexandre.malfre.yt/cv) de m
 
 ### 🎨 Icônes (FontAwesome)
 
-Ce générateur utilise **FontAwesome** pour les icônes. La bibliothèque n'est **pas incluse** dans le dépôt et doit être ajoutée manuellement.
-
-1.  **Télécharger** : Récupérez FontAwesome Free (ou Pro) sur [fontawesome.com](https://fontawesome.com/download).
-2.  **Installer** : Extrayez les fichiers dans `sources/css/lib/`. Voir [sources/css/lib/README.md](sources/css/lib/README.md) pour plus de détails.
-3.  **Utiliser** : Ajoutez la classe de l'icône dans votre fichier JSON (par exemple, `"icon": "fas fa-phone"`).
+Ce générateur utilise **FontAwesome** pour les icônes. Vous pouvez utiliser n'importe quelle classe d'icône directement.
+*   Parcourez les icônes sur [FontAwesome.com](https://fontawesome.com/search) (cherchez la version 6 ou compatible).
+*   Ajoutez la classe de l'icône dans votre fichier JSON (par exemple, `"icon": "fas fa-phone"`).

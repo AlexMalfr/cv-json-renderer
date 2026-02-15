@@ -478,7 +478,16 @@ function createSection_Languages(data) {
             const certificateElem = document.createElement('p');
             certificateElem.textContent = item.certificate;
             certificateElem.classList.add("language-certificate");
-            languageItemElem.appendChild(certificateElem);
+            
+            if (item.certificate_link) {
+                const certLinkElem = document.createElement('a');
+                certLinkElem.href = item.certificate_link;
+                certLinkElem.target = "_blank";
+                certLinkElem.appendChild(certificateElem);
+                languageItemElem.appendChild(certLinkElem);
+            } else {
+                languageItemElem.appendChild(certificateElem);
+            }
         }
     });
 

@@ -39,10 +39,52 @@
         font-family: "Kanit", sans-serif;
     }
 
-    body>*:not(#cv-container) p {
+    body>*:not(#cv-container) #title {
+        margin-bottom: 0;
+    }
+
+    #clickable-links-hint {
+        font-size: 0.9em;
+        color: #666;
+        margin-block: 5px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45em;
+        padding-left: 0;
+    }
+
+    #clickable-links-hint::before {
+        font-family: "Font Awesome 7 Pro";
+        font-style: normal;
+        font-weight: 900;
+        content: "\f0c1";
+        position: static;
+        transform: none;
+        line-height: 1;
+    }
+
+    body>*:not(#cv-container) p,
+    body>*:not(#cv-container) ul {
         color: #333;
-        line-height: 0.8em;
-        text-align: justify;
+    }
+
+    #instructions {
+        text-align: left;
+        margin-top: 50px;
+        line-height: 1em;
+        position: relative;
+        padding-left: 1.6em;
+    }
+
+    #instructions::before {
+        font-family: "Font Awesome 7 Pro";
+        font-style: normal;
+        font-weight: 900;
+        content: "\f05a";
+        position: absolute;
+        left: 0;
+        top: 0.15em;
     }
 
     body>*:not(#cv-container) a {
@@ -64,6 +106,26 @@
         color: #000;
         font-weight: bold;
         text-decoration: none;
+    }
+
+    #print-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6em;
+    }
+
+    #print-btn::before {
+        font-family: "Font Awesome 7 Pro";
+        font-style: normal;
+        font-weight: 900;
+        content: "\f02f";
+        line-height: 1;
+        margin-right: 0.5em;
+    }
+
+    #archives-link {
+        display: inline-block;
     }
 
     body>*:not(#cv-container) button:hover {
@@ -122,16 +184,67 @@
 
         /* Placing the A4 paper in the middle with some shadow */
         box-shadow: -5px 0mm 4mm 3px rgba(0, 0, 0, 0.1);
-        margin-inline: auto;
 
-        /* Ensure scaling happens from the top center */
+        position: relative;
+        left: 50%;
+        margin: 0;
         transform-origin: top center;
-        transform: scale(1);
+        transform: translateX(-50%) scale(var(--cv-scale, 1));
+    }
+
+    @media (max-width: 900px) {
+        body {
+            padding-block: 12px;
+        }
+
+        body>*:not(#cv-container) {
+            width: 100%;
+            box-sizing: border-box;
+            padding-inline: 16px;
+            text-align: left;
+        }
+
+        body>*:not(#cv-container) h1 {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        body>*:not(#cv-container) select,
+        body>*:not(#cv-container) input,
+        body>*:not(#cv-container) button {
+            width: 100%;
+            margin-inline: 0;
+            box-sizing: border-box;
+        }
+
+        #archives-link {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-inline: auto;
+        }
+
+        #cv-container {
+            padding-block: 12px;
+            padding-inline: 14px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        #cv {
+            transform-origin: top center;
+        }
     }
 }
 
 
 @media print {
+    html,
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
     .print-hidden {
         display: none;
     }
@@ -141,10 +254,24 @@
         display: none;
     }
 
+    #cv-container {
+        margin: 0;
+        padding: 0;
+        width: auto;
+        height: auto !important;
+        overflow: visible;
+    }
+
+    #cv {
+        transform: none !important;
+        position: static !important;
+        left: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+    }
+
     @page {
-        /* Remove default margin to use custom margin that we set in #cv
-        (to match the web version) */
-        margin: -2mm;
+        margin: 0;
         padding: 0;
         size: A4;
     }

@@ -20,20 +20,17 @@
     </head>
 
     <body>
-        <div class="print-hidden">            
-            <!-- <button>Retour</button> -->
+        <div class="print-hidden">          
             <h1 id="title">Loading...</h1>
-            <p>Ce CV contient des liens cliquables</p>  
-
             <div>
                 <select id="json-select">
                     <!-- Filled with js -->
                 </select>
-                <input id="json-input" type="text" placeholder="cv-data.json" hidden>
-                <button id="load-btn">Charger</button>
             </div>
+            <p id="clickable-links-hint">Ce CV contient des liens cliquables</p>  
+            
         </div>
-
+        
         <div id="cv-container">
             <div id="cv">
                 <!-- Filled with js -->
@@ -42,13 +39,17 @@
 
         <div class="print-hidden">
             <button id="print-btn">Imprimer ou télécharger le CV</button>
-            <a href="./archives">Archives PDF</a>
-            <p>Pour télécharger en PDF, selectionner "Enregistrer en PDF" dans la liste des imprimantes</p>
-            <p>Si le CV ne tiens pas sur une page, réduire l'échelle dans les paramètres d'impression.</p>
-            <p>Selectionnez "Marges : Aucune" dans les paramètres d'impression</p>
-            <p>Si les couleurs sont incorrectes, selectionner "Graphiques d'arrière-plan" dans "Plus de paramètres"</p>
-            <p>Faites attention à ce que vous extensions de navigateur n'interfèrent pas avec le style du CV (si besoin, charger la page dans un onglet de navigation privée)</p>
-            <p><i>(Testé sur Chrome, Edge et Firefox)</i></p>
+            <a id="archives-link" href="./archives">Archives PDF</a>
+            <div id="instructions">
+                <p>Pour télécharger en PDF, selectionner "Enregistrer en PDF" dans la liste des imprimantes</p>
+                <p>Pour un rendu optimal:</p>
+                <ul>
+                    <li>Selectionnez "Marges : Aucune" dans les paramètres d'impression</li>
+                    <li>Selectionnez "Graphiques d'arrière-plan" dans "Plus de paramètres"</li>
+                </ul>
+                <p>Faites attention à ce que vous extensions de navigateur n'interfèrent pas avec le style du CV (si besoin, charger la page dans un onglet de navigation privée)</p>
+                <p><i>(Testé sur Chrome, Edge et Firefox)</i></p>
+            </div>
         </div>
         <script src="sources/js/i18n.js"></script>
         <script src="sources/js/renderer.js"></script>

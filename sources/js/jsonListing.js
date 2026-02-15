@@ -2,33 +2,24 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     const jsonSelect = document.getElementById('json-select');
-    const jsonInput = document.getElementById('json-input');
-    const loadBtn = document.getElementById('load-btn');
 
-    if (!jsonSelect || !jsonInput || !loadBtn) return;
+    if (!jsonSelect) return;
 
     jsonSelect.onchange = () => {
-        jsonInput.value = jsonSelect.value;
-        if (jsonSelect.value) {
-            // any json selected
-            jsonInput.hidden = true;
-        } else {
-            // "Autre" selected
-            jsonInput.hidden = false;
-        }
+        if (!jsonSelect.value) return;
+        hidePlaceholderIfSelected();
+        const url = new URL(window.location.href);
+        url.searchParams.set('file', jsonSelect.value);
+        window.location.href = url.href;
     };
 
-    loadBtn.addEventListener('click', () => {
-        const url = new URL(window.location.href);
-        // if the "Autre" option is selected, use the input value
-        if (jsonInput.hidden === false) {
-            url.searchParams.set('file', jsonInput.value);
-        } else {
-            // else use the select value
-            url.searchParams.set('file', jsonSelect.value);
+    function hidePlaceholderIfSelected() {
+        if (!jsonSelect.value) return;
+        const placeholder = Array.from(jsonSelect.options).find(opt => opt.value === '');
+        if (placeholder) {
+            placeholder.remove();
         }
-        window.location.href = url.href;
-    });
+    }
 
     // Populate select with available CV JSON files in a cleaner, robust way
     (async function loadOptions() {
@@ -44,9 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (e) {
             console.warn('Could not read default.txt for dropdown selection');
         }
-
-        const toAbsFromBase = (p) => new URL(p, new URL(BASE_DIR, window.location.href)).href;
-        const toAbsFromPage = (p) => new URL(p, window.location.href).href;
 
         async function getFilesByDirectoryScrape() {
             // Fallback: parse simple directory listing HTML
@@ -78,11 +66,63 @@ document.addEventListener('DOMContentLoaded', function () {
             return list;
         }
 
+        function parseLenientJson(text) {
+            const withoutComments = text
+                .replace(/\/\*[\s\S]*?\*\//g, '')
+                .replace(/(^|[^:\\])\/\/.*$/gm, '$1');
+            const withoutTrailingCommas = withoutComments.replace(/,\s*([}\]])/g, '$1');
+            return JSON.parse(withoutTrailingCommas);
+        }
+
+        async function enrichFilesWithMeta(files) {
+            const pageUrl = new URL(window.location.href);
+            const fileParam = pageUrl.searchParams.get('file');
+            let currentFileAbs = null;
+            if (fileParam) {
+                try {
+                    currentFileAbs = fileParam.includes('://')
+                        ? fileParam
+                        : new URL(fileParam, window.location.href).href;
+                } catch (_) {
+                    currentFileAbs = fileParam;
+                }
+            }
+
+            const enriched = await Promise.all(files.map(async ({ path, label }) => {
+                const abs = new URL(path, new URL(BASE_DIR, window.location.href)).href;
+                try {
+                    const response = await fetch(abs, { cache: 'no-cache' });
+                    if (!response.ok) return { path, label, hidden: false, abs };
+
+                    const text = await response.text();
+                    const jsonData = parseLenientJson(text);
+                    const title = jsonData?.meta?.title;
+                    const hidden = Boolean(jsonData?.meta?.hidden);
+
+                    return {
+                        path,
+                        label: title || label,
+                        hidden,
+                        abs,
+                    };
+                } catch (error) {
+                    return { path, label, hidden: false, abs };
+                }
+            }));
+
+            return enriched.filter(item => !item.hidden || item.abs === currentFileAbs);
+        }
+
         function populateOptions(files) {
-            // Clear existing options except maybe a placeholder if present
             while (jsonSelect.firstChild) {
                 jsonSelect.removeChild(jsonSelect.firstChild);
             }
+
+            const placeholderOption = document.createElement('option');
+            placeholderOption.value = '';
+            placeholderOption.textContent = 'Choisir un CV...';
+            placeholderOption.selected = true;
+            jsonSelect.appendChild(placeholderOption);
 
             const frag = document.createDocumentFragment();
             const seen = new Set();
@@ -99,12 +139,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 frag.appendChild(opt);
             });
             jsonSelect.appendChild(frag);
-
-            // Add "Autre" option
-            const optionOther = document.createElement('option');
-            optionOther.value = "";
-            optionOther.textContent = "Autre...";
-            jsonSelect.appendChild(optionOther);
         }
 
         function selectDefault(files) {
@@ -125,12 +159,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     targetAbs = fileParam; 
                 }
             } else {
-                // If no param, use the detected DEFAULT_FILE
                 targetAbs = new URL(DEFAULT_FILE, new URL(BASE_DIR, window.location.href)).href;
             }
 
-            // Clean up targetAbs to match option values (which are full URLs)
-            
             let found = false;
             for (let i = 0; i < jsonSelect.options.length; i++) {
                 if (jsonSelect.options[i].value === targetAbs) {
@@ -140,7 +171,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
             
-            // If not found, check if it ends with the target file name (looser match)
             if (!found && targetAbs) {
                 const targetName = targetAbs.split('/').pop();
                 for (let i = 0; i < jsonSelect.options.length; i++) {
@@ -153,19 +183,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-            // If still not found but we have options, select the first one? 
-            // Better to select nothing or let the user choose, but for now user wants default selected.
-            
-            jsonSelect.dispatchEvent(new Event('change'));
+            if (!found) {
+                jsonSelect.selectedIndex = 0;
+            } else {
+                hidePlaceholderIfSelected();
+            }
         }
 
         try {
             const files = await getFilesByDirectoryScrape();
-            populateOptions(files);
-            selectDefault(files);
+            const visibleFiles = await enrichFilesWithMeta(files);
+            populateOptions(visibleFiles);
+            selectDefault(visibleFiles);
         } catch (err) {
             console.error('Failed to list sources:', err);
-            // Fallback if listing fails: just add the default file as an option
             const list = [{ path: DEFAULT_FILE, label: DEFAULT_FILE }];
             populateOptions(list);
             selectDefault(list);

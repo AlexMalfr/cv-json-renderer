@@ -1,6 +1,7 @@
 sources/cv-data/*.json
 sources/cv-data/default.txt
 !sources/cv-data/cv-data.template.json
+!sources/cv-data/cv-data.benchmark.json
 sources/images/*
 sources/css/lib/fontawesome-*
 !**/.gitkeep

@@ -1,0 +1,206 @@
+{
+    "meta": {
+        "created_at": "2024-02-17T22:56:18.316248",
+        "updated_at": "2024-02-17T23:12:32.060936",
+        "title": "Cv Data.Benchmark.Json",
+        "lang": "fr",
+        "grid_template_columns": "70fr 25fr",
+        "zoom": "95%"
+    },
+    "data": {
+        "name": "Jean Dupont de le Fourmillière",
+        "profile_picture": "https://thispersondoesnotexist.com/",
+        "cv_title": "Recherche de stage ou d'emploi dans le domaine spécifique avec un titre vraiment très long pour tester le retour à la ligne",
+        "bio": "Ea ex veniam elit aliquip commodo. Non duis magna mollit duis aliqua minim irure id. Elit elit irure id ad deserunt. Ipsum culpa dolore et ea fugiat enim elit occaecat amet laboris tempor do exercitation. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "education": [
+            {
+                "institution": "Nom de l'institution Nom de l'institution Nom de l'institution Nom de l'institution",
+                "degree": "Diplôme ou cursus suivi avec un intitulé très long et détaillé",
+                "specialization": "Spécialisation suivie en ingénierie informatique et technologies avancées",
+                "years": "20XX - 20XX",
+                "skills": [
+                    "Compétence 1",
+                    "Compétence 2",
+                    "Compétence 3",
+                    "Autre compétence longue à afficher",
+                    "Encore une compétence"
+                ]
+            },
+            {
+                "institution": "Universite de Technologie de Compiègne et d'ailleurs",
+                "degree": "Master 2 Recherche en Sciences Cognitives et Informatique",
+                "specialization": "Intelligence Artificielle et Science des Données",
+                "years": "2020 - 2022",
+                "skills": [
+                    "Deep Learning",
+                    "Reinforcement Learning",
+                    "Python",
+                    "TensorFlow"
+                ],
+                "mention": "Très Bien avec félicitations du jury"
+            }
+        ],
+        "experience": [
+            {
+                "company": "Nom de l'entreprise Multinationale Internationale Corporation LLC",
+                "position": "Ingénieur d'études et développement Full Stack Senior Lead",
+                "tasks": [
+                    "Développement d'une architecture microservices résiliente et hautement, très hautement, disponible.",
+                    "Gestion d'une équipe de 50 développeurs répartis sur 3 continents.",
+                    "Optimisation des performances de la base de données réduisant la latence de 500ms à 5ms.",
+                    "Implémentation de tests unitaires, d'intégration et end-to-end.",
+                    "Rédaction de documentation technique exhaustive."
+                ],
+                "date": "Janvier 2020 - Aujourd'hui"
+            },
+            {
+                "company": "Startup Innovante",
+                "position": "Stagiaire bras droit du CEO",
+                "tasks": [
+                    "Tout faire",
+                    "Café",
+                    "Développement"
+                ],
+                "date": "Été 2019"
+            }
+        ],
+        "skills": [
+            {
+                "title": "Catégorie de compétences 1",
+                "skill_list": [
+                    {
+                        "name": "Compétence technique très longue 1",
+                        "link": "https://exemple.com"
+                    },
+                    {
+                        "name": "Compétence 2"
+                    },
+                    {
+                        "name": "Compétence 3"
+                    },
+                    {
+                        "name": "Compétence 4"
+                    },
+                    {
+                        "name": "Compétence 5"
+                    },
+                    {
+                        "name": "Compétence 6"
+                    }
+                ]
+            },
+            {
+                "title": "Catégorie 2",
+                "skill_list": [
+                    {
+                        "name": "Skill A"
+                    },
+                    {
+                        "name": "Skill B"
+                    }
+                ]
+            },
+            {
+                "title": "Catégorie 3",
+                "skill_list": [
+                    {
+                        "name": "Skill X"
+                    },
+                    {
+                        "name": "Skill Y"
+                    },
+                    {
+                        "name": "Skill Z"
+                    }
+                ]
+            }
+        ],
+        "projects": [
+            {
+                "name": "Nom du projet 1 Nom du projet 1 Nom du projet 1 Nom du projet 1",
+                "description": "Brève description du projet et de son impact ou résultat, qui prend plusieurs lignes pour vérifier l'affichage.",
+                "date": "2023 - 2024",
+                "link": "https://lienVersProjet.com"
+            },
+            {
+                "name": "Un autre projet",
+                "description": "Description courte.",
+                "date": "2022",
+                "link": "https://lienVersProjet.com"
+            }
+        ],
+        "awards": [
+            {
+                "name": "Nom du concours ou de la distinction internationale prestigieuse",
+                "achievement": "Premier prix sur 100000 participants",
+                "year": "2023",
+                "link": "https://lienVersDistinction.com"
+            }
+        ],
+        "languages": [
+            {
+                "name": "Français",
+                "proficiency": "Langue maternelle"
+            },
+            {
+                "name": "Anglais",
+                "proficiency": "Bilingue / C2",
+                "certificate": "TOEIC 990/990"
+            },
+            {
+                "name": "Allemand",
+                "proficiency": "Scolaire"
+            }
+        ],
+        "icons": {
+            "education": "fas fa-graduation-cap",
+            "experience": "fas fa-briefcase",
+            "skills": "fas fa-cogs",
+            "projects": "fas fa-project-diagram",
+            "awards": "fas fa-award",
+            "languages": "fas fa-language"
+        },
+        "header_columns": [
+            [
+                {
+                    "name": "Téléphone",
+                    "icon": "fas fa-phone",
+                    "label": "+33 6 12 34 56 78",
+                    "url": "tel:+33612345678"
+                },
+                {
+                    "name": "Adresse",
+                    "icon": "fas fa-map-marker-alt",
+                    "label": "Ville avec un nom à rallonge (Code Postal)",
+                    "url": "https://maps.app.goo.gl/linkVersAdresse"
+                },
+                {
+                    "name": "Email",
+                    "icon": "fas fa-envelope",
+                    "label": "prenom.nom.tres.long@example.subdomain.com",
+                    "url": "mailto:prenom.nom.tres.long@example.subdomain.com"
+                }
+            ],
+            [
+                {
+                    "name": "Site personnel",
+                    "icon": "fas fa-globe",
+                    "label": "https://prenom.nom.website.long.url.com/",
+                    "url": "https://prenom.nom.website.long.url.com/"
+                },
+                {
+                    "name": "GitHub",
+                    "icon": "fab fa-github",
+                    "label": "/VotrePseudoTresLongSurGithub",
+                    "url": "https://github.com/VotrePseudoTresLongSurGithub"
+                },
+                {
+                    "name": "LinkedIn",
+                    "icon": "fab fa-linkedin",
+                    "label": "/prenom-nom-suffixe-professionnel",
+                    "url": "https://www.linkedin.com/in/prenom-nom-suffixe-professionnel/"
+                }
+            ]
+        ]
+    }
+}

@@ -17,7 +17,7 @@
 
 ## Screenshot
 
-<img width="1437" height="764" alt="image" src="https://github.com/user-attachments/assets/a97b5a0b-2812-41e1-9698-e9c66229011d" />
+<img width="1420" height="798" alt="image" src="https://github.com/user-attachments/assets/671735f2-d76a-485e-9321-69b355067522" />
 
 ---
 
@@ -25,6 +25,13 @@
 ## 🇬🇧 English
 
 This project is a static site generator that creates a resume (CV) from a JSON configuration file. It renders the CV in HTML/CSS, allowing for easy updates and direct export to PDF or printing.
+
+> [!WARNING]
+> I made this generator solely for my personal use, so it is not designed to be a general-purpose tool (only supports one theme, a lot of hardcoded values, etc.)
+> 
+> I decided to make it public in case it can be useful to someone else, but I won't be providing extra support for it.
+>
+> However, feel free to use it to create your own CV, and to adapt the code to your needs! 😉
 
 ### 🔗 Link to my CV
 You can find my CV on [this page](https://alexandre.malfre.yt/cv) of my personal website.
@@ -63,6 +70,13 @@ This generator uses **FontAwesome** for icons. You can use any icon class from t
 ## 🇫🇷 Français
 
 Ce projet est un générateur de site statique qui crée un CV à partir d'un fichier de configuration JSON. Il génère le CV en HTML/CSS, permettant des mises à jour faciles et une exportation directe en PDF ou impression.
+
+> [!WARNING]
+> J'ai créé ce générateur uniquement pour mon usage personnel, il n'est donc pas conçu pour être un outil généraliste (ne supporte qu'un thème, beaucoup de valeurs en dur, etc.)
+>
+> J'ai décidé de le rendre public au cas où il pourrait être utile à quelqu'un d'autre, mais je ne fournirai pas de support supplémentaire pour celui-ci.
+>
+> Cependant, n'hésitez pas à l'utiliser pour créer votre propre CV, et à adapter le code à vos besoins ! 😉
 
 ### 🔗 Lien vers mon CV
 Vous pouvez trouver mon CV sur [cette page](https://alexandre.malfre.yt/cv) de mon site personnel.

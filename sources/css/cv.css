@@ -74,6 +74,14 @@
         transition-timing-function: ease-in-out;
     }
 
+    body>*:not(#cv-container) button.disabled {
+        background-color: #ccc;
+        color: #888;
+        border-color: #aaa;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
     body>*:not(#cv-container) select,
     body>*:not(#cv-container) input {
         margin-block: 5px;

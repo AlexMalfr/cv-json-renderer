@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
         try { localStorage.setItem('lang', locale); } catch {}
 
-        displayCV(cvData);
+        displayCV(cvData, meta);
 
         // Update title and favicon from the JSON data
         document.title = `${cvData.name} - CV ${meta?.title ?? ''}`.trim();

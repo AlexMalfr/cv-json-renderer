@@ -1,6 +1,6 @@
 // renderer.js - all DOM creation to render the CV
 
-function displayCV(data) {
+function displayCV(data, meta) {
     const cvContainer = document.getElementById('cv');
 
     // empty the container
@@ -14,13 +14,13 @@ function displayCV(data) {
 
     const cvBody = document.createElement('div');
     cvBody.classList.add("cv-body");
-    if (data.grid_template_columns) {
-        cvBody.style.gridTemplateColumns = data.grid_template_columns;
+    if (meta && meta.grid_template_columns) {
+        cvBody.style.gridTemplateColumns = meta.grid_template_columns;
     }
     
     // Handle zoom
-    if (data.zoom) {
-        let zoomVal = data.zoom;
+    if (meta && meta.zoom) {
+        let zoomVal = meta.zoom;
         if (typeof zoomVal === 'string' && zoomVal.includes('%')) {
             zoomVal = parseFloat(zoomVal) / 100;
         } else {
@@ -93,11 +93,15 @@ function createHeader(data) {
     headerElem.appendChild(photoAndNameElem);
     
     // Add contact information to header
-    const contactAndLinksElem = document.createElement('div');
-    contactAndLinksElem.classList.add("contact-and-links");
-    contactAndLinksElem.appendChild(createLinks(data, false));
-    contactAndLinksElem.appendChild(createContact(data, true));
-    headerElem.appendChild(contactAndLinksElem);
+    if (data.header_columns && Array.isArray(data.header_columns)) {
+        const headerLinksElem = document.createElement('div');
+        headerLinksElem.classList.add("header-links");
+
+        data.header_columns.forEach(columnData => {
+            headerLinksElem.appendChild(createHeaderColumn(columnData));
+        });
+        headerElem.appendChild(headerLinksElem);
+    }
 
     // Add summary to header
     if (data.text != null) {
@@ -144,26 +148,21 @@ function createPhotoAndName(data) {
     return photoAndNameElem;
 }
 
-function createLinks(data, right = false) {
-    return createListWithIcons(data.links, "links", right);
-}
-
-function createContact(data, right = true) {
-    return createListWithIcons(data.contact, "contact", right);
-}
-
-function createListWithIcons(data, listClass, right = false) {
+function createHeaderColumn(data) {
     const listElem = document.createElement('address');
-    listElem.classList.add(listClass);
+    listElem.classList.add("header-links-column");
+
+    if (!data || !Array.isArray(data)) return listElem;
 
     data.forEach(item => {
         const listItemAnchor = document.createElement('a');
+        listItemAnchor.classList.add("header-link");
         listItemAnchor.title = item.name;
         listItemAnchor.href = item.url;
         listItemAnchor.target = "_blank";
 
         const listItemElem = document.createElement('p');
-        listItemElem.textContent = item.label;
+        // listItemElem.textContent = item.label; // Will append text node manually to control order
         listItemAnchor.appendChild(listItemElem);
 
         listElem.appendChild(listItemAnchor);
@@ -171,15 +170,20 @@ function createListWithIcons(data, listClass, right = false) {
         const iconElem = document.createElement('i');
         iconElem.className = item.icon; // add Font Awesome icon
         iconElem.classList.add("icon");
-        if (right) {
-            listItemElem.appendChild(iconElem, listItemElem.firstChild);
-        } else {
-            listItemElem.insertBefore(iconElem, listItemElem.firstChild);
-        }
+        
+        // Append icon and text. Order will be handled by CSS flexbox order or specific structure?
+        // User asked: "change icon positioning relative to text so that if there are 2 columns the icons of the first column are on the left and the icons of the icons of the second column are on the right, but bor any other number of columns all icons are on the left."
+        // "Do this in CSS."
+        // So in HTML I should just put them in a standard order, e.g. Icon then Text.
+        // CSS will handle visual reordering if needed (e.g. using flex-direction: row-reverse or order property).
+        // Let's put Icon first consistently.
+        listItemElem.appendChild(iconElem);
+        listItemElem.appendChild(document.createTextNode(item.label));
     });
 
     return listElem;
 }
+
 
 /* ---------- Sections ---------- */
 

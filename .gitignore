@@ -1,4 +1,5 @@
 sources/cv-data/*.json
+sources/cv-data/default.txt
 !sources/cv-data/cv-data.template.json
 sources/images/*
 sources/css/lib/fontawesome-*

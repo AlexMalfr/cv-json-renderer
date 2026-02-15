@@ -10,10 +10,34 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     // Load JSON data from file or query string
-    let fileURL = "sources/cv-data/cv-data.json"; // default
+    let fileURL = "sources/cv-data/cv-data.json"; // fallback default
     const urlParams = new URLSearchParams(window.location.search);
     const fileParam = urlParams.get('file');
-    if (fileParam) fileURL = fileParam;
+    
+    if (fileParam) {
+        fileURL = fileParam;
+    } else {
+        // Try to read default filename from default.txt if no param provided
+        try {
+            const defaultResp = await fetch("sources/cv-data/default.txt", { cache: 'no-cache' });
+            if (defaultResp.ok) {
+                const defaultName = (await defaultResp.text()).trim();
+                // Check if the default file actually exists
+                if (defaultName) {
+                    const checkResp = await fetch("sources/cv-data/" + defaultName, { method: 'HEAD' });
+                    if (checkResp.ok) {
+                    fileURL = "sources/cv-data/" + defaultName;
+                    } else {
+                        console.warn(`Default file '${defaultName}' not found (HTTP ${checkResp.status}), falling back to cv-data.json`);
+                    }
+                }
+            } else {
+                console.warn("Could not load default.txt (HTTP " + defaultResp.status + "), using fallback cv-data.json");
+            }
+        } catch (e) {
+            console.warn("Could not load default.txt, using fallback cv-data.json", e);
+        }
+    }
 
     try {
         const response = await fetch(fileURL, { cache: 'no-cache' });

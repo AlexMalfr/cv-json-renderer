@@ -1,5 +1,19 @@
 // main.js - bootstrap: init i18n, load data, render, wire UI
 
+// Homepage button: detach from top and float when scrolling (desktop only)
+(function () {
+    const btn = document.getElementById('homepage-btn');
+    if (!btn) return;
+    window.addEventListener('scroll', function () {
+        const isMobile = window.matchMedia('(max-width: 900px)').matches;
+        if (isMobile) {
+            btn.classList.remove('detached');
+        } else {
+            btn.classList.toggle('detached', window.scrollY > 0);
+        }
+    }, { passive: true });
+})();
+
 document.addEventListener('DOMContentLoaded', async function () {
     // Initialize translations
     try {

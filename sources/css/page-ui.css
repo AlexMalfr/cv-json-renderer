@@ -1,0 +1,266 @@
+/* Page-level UI: body layout, controls toolbar, homepage button, GitHub footer */
+
+@media screen {
+
+    /* ── Page layout ── */
+    body {
+        width: 100%;
+        margin: 0;
+        padding-block: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #f0f0f0;
+        position: relative;
+    }
+
+    body>*:not(#cv-container):not(#homepage-btn):not(#github-footer) {
+        text-align: center;
+        padding-inline: min(100px, 10%);
+        font-family: "Kanit", sans-serif;
+    }
+
+    body>*:not(#cv-container) #title {
+        margin-bottom: 0;
+    }
+
+    body>*:not(#cv-container) p,
+    body>*:not(#cv-container) ul {
+        color: #333;
+    }
+
+    body>*:not(#cv-container) a {
+        color: #888;
+        font-style: italic;
+        font-weight: lighter;
+        /* font-size: 0.9em; */
+        padding: 5px;
+    }
+
+    /* ── Controls toolbar ── */
+    body>*:not(#cv-container) button {
+        display: inline-block;
+        margin-block: 5px;
+        margin-inline: 10px;
+        padding: 10px 30px;
+        border-radius: 0;
+        border: 2px solid #000;
+        background-color: #DDD;
+        color: #000;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    body>*:not(#cv-container) button:hover {
+        background-color: #000;
+        color: #FFF;
+        transition-property: background-color, color;
+        transition-duration: 0.5s;
+        transition-timing-function: ease-in-out;
+    }
+
+    body>*:not(#cv-container) button.disabled {
+        background-color: #ccc;
+        color: #888;
+        border-color: #aaa;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    body>*:not(#cv-container) select,
+    body>*:not(#cv-container) input {
+        margin-block: 5px;
+        margin-inline: 10px;
+        padding-inline: 20px;
+        height: 100%;
+        border-radius: 0;
+        border: 2px solid #000;
+        font-size: 1.1em;
+    }
+
+    body>*:not(#cv-container) select option {
+        border-radius: 0;
+        border: 2px solid #000;
+        font-size: 0.9em;
+    }
+
+    #print-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6em;
+    }
+
+    #print-btn::before {
+        font-family: "Font Awesome 7 Pro";
+        font-style: normal;
+        font-weight: 900;
+        content: "\f02f";
+        line-height: 1;
+        margin-right: 0.5em;
+    }
+
+    #archives-link {
+        display: inline-block;
+    }
+
+    #clickable-links-hint {
+        font-size: 0.9em;
+        color: #666;
+        margin-block: 5px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45em;
+        padding-left: 0;
+    }
+
+    #clickable-links-hint::before {
+        font-family: "Font Awesome 7 Pro";
+        font-style: normal;
+        font-weight: 900;
+        content: "\f0c1";
+        position: static;
+        transform: none;
+        line-height: 1;
+    }
+
+    #instructions {
+        text-align: left;
+        margin-top: 50px;
+        line-height: 1em;
+        position: relative;
+        padding-left: 1.6em;
+    }
+
+    #instructions::before {
+        font-family: "Font Awesome 7 Pro";
+        font-style: normal;
+        font-weight: 900;
+        content: "\f05a";
+        position: absolute;
+        left: 0;
+        top: 0.15em;
+    }
+
+    /* ── Mobile breakpoint ── */
+    @media (max-width: 900px) {
+        body {
+            padding-block: 12px;
+        }
+
+        body>*:not(#cv-container):not(#homepage-btn):not(#github-footer) {
+            width: 100%;
+            box-sizing: border-box;
+            padding-inline: 16px;
+            text-align: left;
+        }
+
+        body>*:not(#cv-container) h1 {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        body>*:not(#cv-container) select,
+        body>*:not(#cv-container) input,
+        body>*:not(#cv-container) button {
+            width: 100%;
+            margin-inline: 0;
+            box-sizing: border-box;
+        }
+
+        #archives-link {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-inline: auto;
+        }
+    }
+
+    /* ── Under 990px (home button threshold) ── */
+    @media (max-width: 990px) {
+        body {
+            padding-top: 12px;
+        }
+
+        #title {
+            margin-top: 0;
+        }
+    }
+
+    /* ── Homepage button ── */
+    #homepage-btn {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        z-index: 1000;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4em;
+        padding: 5px 10px;
+        background: #f5f5f5;
+        border: 1px solid #aaa;
+        color: #888;
+        font-family: "Kanit", sans-serif;
+        font-weight: normal;
+        font-size: 0.8em;
+        text-decoration: none;
+        box-shadow: none;
+        transition: box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    #homepage-btn.detached {
+        position: fixed;
+        box-shadow: 2px 4px 14px rgba(0, 0, 0, 0.22);
+    }
+
+    #homepage-btn:hover {
+        background-color: #eee;
+        border-color: #555;
+        color: #333;
+    }
+
+    @media (max-width: 990px) {
+        /* On mobile, button is in normal flow — pushes content down */
+        #homepage-btn,
+        #homepage-btn.detached {
+            position: static;
+            box-shadow: none;
+            align-self: flex-start;
+            margin-bottom: 8px;
+            margin-left: 12px;
+            top: unset;
+            left: unset;
+        }
+    }
+
+    /* ── GitHub footer ── */
+    #github-footer {
+        padding: 16px;
+        font-family: "Kanit", sans-serif;
+        font-size: 0.95em;
+        text-align: center;
+    }
+
+    #github-footer a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55em;
+        color: #555;
+        text-decoration: none;
+        font-style: normal;
+        font-weight: normal;
+        padding: 0;
+        font-size: 1em;
+    }
+
+    #github-footer a:hover {
+        color: #000;
+    }
+
+    #github-footer a .fa-github {
+        font-size: 1.3em;
+    }
+
+}

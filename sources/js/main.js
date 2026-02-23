@@ -5,7 +5,7 @@
     const btn = document.getElementById('homepage-btn');
     if (!btn) return;
     window.addEventListener('scroll', function () {
-        const isMobile = window.matchMedia('(max-width: 900px)').matches;
+        const isMobile = window.matchMedia('(max-width: 990px)').matches;
         if (isMobile) {
             btn.classList.remove('detached');
         } else {

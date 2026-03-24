@@ -174,7 +174,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         displayCV(cvData, meta);
 
         // Update title and favicon from the JSON data
-        document.title = `${cvData.name} - CV ${meta?.title ?? ''}`.trim();
+        const cvLabel = meta?.title && meta.title.toUpperCase().includes('CV') ? '' : 'CV ';
+        document.title = `${cvData.name} - ${cvLabel}${meta?.title ?? ''}`.trim();
         const favicon = document.getElementById('favicon');
         if (favicon) favicon.href = cvData.profile_picture;
 

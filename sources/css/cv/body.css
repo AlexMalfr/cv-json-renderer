@@ -150,7 +150,7 @@ p.date {
     font-weight: bold;
     font-style: italic;
     text-align: left;
-    margin-bottom: 8px !important;
+    margin-bottom: 3px !important;
 }
 
 .language-certificate::before {
@@ -168,5 +168,5 @@ p.date {
 
 .section.section-languages .item:not(:last-of-type) {
     margin-bottom: 5px;
-    /* background-color: red; */
+    background-color: red;
 } */

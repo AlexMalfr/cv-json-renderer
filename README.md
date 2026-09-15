@@ -60,9 +60,9 @@ You can find my CV on [this page](https://alexandre.malfre.yt/cv) of my personal
 
 ### 🎨 Icons (FontAwesome)
 
-This generator uses **FontAwesome** for icons. You can use any icon class from the included library directly.
-*   Browse icons on [FontAwesome.com](https://fontawesome.com/search) (look for version 6 or compatible).
-*   Add the icon class to your JSON file (e.g., `"icon": "fas fa-phone"`).
+This generator uses a local, minimal **Font Awesome Pro 7.1.0** subset containing only the icons currently used by the application and CV data.
+*   Add one of the classes declared in `sources/css/fontawesome-minimal.css` to your JSON file (e.g., `"icon": "fas fa-phone"`).
+*   When adding another icon, rebuild both the CSS mapping and the corresponding subset webfonts from `fontawesome-pro_v7.1.0.zip`.
 
 ---
 
@@ -105,6 +105,6 @@ Vous pouvez trouver mon CV sur [cette page](https://alexandre.malfre.yt/cv) de m
 
 ### 🎨 Icônes (FontAwesome)
 
-Ce générateur utilise **FontAwesome** pour les icônes. Vous pouvez utiliser n'importe quelle classe d'icône directement.
-*   Parcourez les icônes sur [FontAwesome.com](https://fontawesome.com/search) (cherchez la version 6 ou compatible).
-*   Ajoutez la classe de l'icône dans votre fichier JSON (par exemple, `"icon": "fas fa-phone"`).
+Ce générateur utilise un sous-ensemble local et minimal de **Font Awesome Pro 7.1.0**, limité aux icônes actuellement utilisées par l’application et les données des CV.
+*   Ajoutez dans vos JSON une classe déclarée dans `sources/css/fontawesome-minimal.css` (par exemple, `"icon": "fas fa-phone"`).
+*   Pour ajouter une nouvelle icône, reconstruisez le mapping CSS et les fontes sous-ensembles correspondantes à partir de `fontawesome-pro_v7.1.0.zip`.

@@ -1,0 +1,78 @@
+/*
+ * Font Awesome Pro 7.1.0 - CV generator subset
+ * License: https://fontawesome.com/license (Commercial License)
+ * Copyright 2025 Fonticons, Inc.
+ */
+
+@font-face {
+    font-family: "Font Awesome 7 Pro";
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url("./webfonts/fa-solid-900-cv.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Font Awesome 7 Brands";
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("./webfonts/fa-brands-400-cv.woff2") format("woff2");
+}
+
+.fa,
+.fas,
+.fa-solid,
+.fab,
+.fa-brands {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: var(--fa-display, inline-block);
+    font-family: var(--fa-family, "Font Awesome 7 Pro");
+    font-feature-settings: normal;
+    font-style: normal;
+    font-synthesis: none;
+    font-variant: normal;
+    font-weight: var(--fa-style, 900);
+    line-height: 1;
+    text-align: center;
+    text-rendering: auto;
+    width: var(--fa-width, 1.25em);
+}
+
+.fas,
+.fa-solid {
+    --fa-family: "Font Awesome 7 Pro";
+    --fa-style: 900;
+}
+
+.fab,
+.fa-brands {
+    --fa-family: "Font Awesome 7 Brands";
+    --fa-style: 400;
+}
+
+:is(.fa, .fas, .fa-solid, .fab, .fa-brands)::before {
+    content: var(--fa) / "";
+}
+
+@supports not (content: "" / "") {
+    :is(.fa, .fas, .fa-solid, .fab, .fa-brands)::before {
+        content: var(--fa);
+    }
+}
+
+.fa-house { --fa: "\f015"; }
+.fa-exclamation-triangle { --fa: "\f071"; }
+.fa-cogs { --fa: "\f085"; }
+.fa-phone { --fa: "\f095"; }
+.fa-globe { --fa: "\f0ac"; }
+.fa-briefcase { --fa: "\f0b1"; }
+.fa-envelope { --fa: "\f0e0"; }
+.fa-graduation-cap { --fa: "\f19d"; }
+.fa-language { --fa: "\f1ab"; }
+.fa-map-marker-alt { --fa: "\f3c5"; }
+.fa-project-diagram { --fa: "\f542"; }
+.fa-award { --fa: "\f559"; }
+.fa-linkedin { --fa: "\f08c"; }
+.fa-github { --fa: "\f09b"; }

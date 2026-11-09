@@ -1,3 +1,4 @@
-@REM Start a simple HTTP server and open the CV generator in the default web browser
-start http://localhost:8080/ @REM open the URL before starting the server to avoid blocking
-python -m http.server 8080
+@echo off
+cd /d "%~dp0" || exit /b 1
+start "" http://127.0.0.1:8080/
+python -m http.server 8080 --bind 127.0.0.1

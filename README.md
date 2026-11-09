@@ -39,11 +39,17 @@ You can find my CV on [this page](https://alexandre.malfre.yt/cv) of my personal
 ### 🚀 How to use (local)
 
 > [!NOTE]
-> Use a local HTTP server so the browser can fetch the CV data and translations. The included `start-server.bat` uses Python.
+> Use a local HTTP server so the browser can fetch the CV data and translations.
 
-1.  **Prerequisites**: You need Python installed to run the local server.
-2.  **Start the Server**: Double-click on `start-server.bat`. This will start a local web server and open your default browser to `http://localhost:8080`.
-3.  **Choose your CV**: Use the dropdown menu or open `http://localhost:8080/?file=sources/cv-data/cv-data.template.json`.
+With Python 3 installed, run this command from the project root.
+
+```sh
+python3 -m http.server 8080 --bind 127.0.0.1
+```
+
+If your installation uses the `python` command, substitute it for `python3`. For a shortcut, double-click [start-server.bat](start-server.bat) on Windows, or launch [start-server.sh](start-server.sh) with `sh ./start-server.sh` in Bash or another compatible shell.
+
+Open [the local preview](http://127.0.0.1:8080/) and select a CV from the dropdown, or open [the example CV directly](http://127.0.0.1:8080/?file=sources/cv-data/cv-data.template.json).
 
 ### 🚀 How to deploy (online)
 
@@ -93,11 +99,17 @@ Vous pouvez trouver mon CV sur [cette page](https://alexandre.malfre.yt/cv) de m
 ### 🚀 Comment l'utiliser (local)
 
 > [!NOTE]
-> Utilisez un serveur HTTP local pour que le navigateur puisse charger les données du CV et les traductions. Le script `start-server.bat` fourni utilise Python.
+> Utilisez un serveur HTTP local pour que le navigateur puisse charger les données du CV et les traductions.
 
-1.  **Prérequis** : Vous avez besoin de Python installé pour lancer le serveur local.
-2.  **Lancer le serveur** : Double-cliquez sur `start-server.bat`. Cela démarrera un serveur web local et ouvrira votre navigateur par défaut sur `http://localhost:8080`.
-3.  **Choisir votre CV** : Utilisez le menu déroulant ou ouvrez `http://localhost:8080/?file=sources/cv-data/cv-data.template.json`.
+Après avoir installé Python 3, exécutez cette commande depuis la racine du projet.
+
+```sh
+python3 -m http.server 8080 --bind 127.0.0.1
+```
+
+Si votre installation utilise la commande `python`, remplacez `python3` par `python`. Comme raccourci, double-cliquez sur [start-server.bat](start-server.bat) sous Windows, ou lancez [start-server.sh](start-server.sh) avec `sh ./start-server.sh` dans Bash ou un shell compatible.
+
+Ouvrez [l’aperçu local](http://127.0.0.1:8080/) et sélectionnez un CV dans le menu déroulant, ou ouvrez [directement le CV d’exemple](http://127.0.0.1:8080/?file=sources/cv-data/cv-data.template.json).
 
 ### 🚀 Comment déployer (en ligne)
 

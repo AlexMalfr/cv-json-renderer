@@ -39,24 +39,33 @@ You can find my CV on [this page](https://alexandre.malfre.yt/cv) of my personal
 ### 🚀 How to use (local)
 
 > [!NOTE]
-> To run this project locally, a server is required to bypass CORS protections that prevent browsers from loading JSON files and other local files directly from the filesystem.
-> 
-> (It does not need to be a Python server, any local server will work, but the included `start-server.bat` uses Python for simplicity)
+> Use a local HTTP server so the browser can fetch the CV data and translations. The included `start-server.bat` uses Python.
 
 1.  **Prerequisites**: You need Python installed to run the local server.
 2.  **Start the Server**: Double-click on `start-server.bat`. This will start a local web server and open your default browser to `http://localhost:8080`.
-3.  **Choose your CV**: Use the dropdown menu at the top of the page to select a JSON file from the `sources/cv-data/` directory.
+3.  **Choose your CV**: Use the dropdown menu or open `http://localhost:8080/?file=sources/cv-data/cv-data.template.json`.
 
 ### 🚀 How to deploy (online)
 
-1.  **Prerequisites**: You need a web server capable of serving static files (via FTP, SFTP, or a web hosting service).
-2.  **Deployment**: Copy all the project files into the root directory of your web server.
+Copy `index.html` and the `sources/` assets to a static web host, keeping the directory structure. Include the CV files you intend to publish. The dropdown relies on a directory listing for `sources/cv-data/`. Direct `?file=...` links also work on hosts with directory listings disabled.
 
 ### 📝 Editing Data
 
-*   **Data Location**: Place your JSON files in the `sources/cv-data/` folder.
-*   **Template**: You can use [sources/cv-data/cv-data.template.json](sources/cv-data/cv-data.template.json) as a starting point.
-*   **Default File**: The generator looks for `sources/cv-data/cv-data.json` by default.
+Copy the [example template](sources/cv-data/cv-data.template.json) to a new file under `sources/cv-data/`. Edit `data` for the CV content and `meta` for display settings. To select the CV that opens without a `?file` parameter, create `sources/cv-data/default.txt` with the filename on one line. The fallback is `sources/cv-data/cv-data.json`.
+
+| Field | Purpose |
+| --- | --- |
+| `meta.title` | Labels the CV in the dropdown and contributes to the browser tab title. |
+| `meta.lang` | Selects English (`en`) or French (`fr`) for shared section headings. |
+| `meta.hidden` | Set to `true` to hide the variant from the dropdown unless it is already open. Direct links still work. |
+| `meta.grid_template_columns` | Sets the CSS column widths, for example `"2fr 1fr"`. |
+| `meta.zoom` | Scales the rendered CV, for example `"95%"`. Check the A4 print preview after adjusting it or the column widths. |
+
+CV data files support `//` line comments, `/* ... */` block comments and trailing commas in both the renderer and the dropdown. You can comment out optional entries and restore them later. Strict JSON tools may reject this syntax.
+
+### 🌐 Translations
+
+Shared CV section headings live in [the English dictionary](sources/i18n/en.json) and [the French dictionary](sources/i18n/fr.json). Edit those files to change a heading across CVs in that language. Translate the text and links in each CV's `data` separately.
 
 ### 🎨 Icons (FontAwesome)
 
@@ -84,24 +93,33 @@ Vous pouvez trouver mon CV sur [cette page](https://alexandre.malfre.yt/cv) de m
 ### 🚀 Comment l'utiliser (local)
 
 > [!NOTE]
-> Pour exectuer ce projet en local, un serveur est nécessaire pour contourner les protections CORS qui empêchent les navigateurs de charger les fichiers JSON et autres fichiers locaux directement depuis le système de fichiers.
-> 
-> (Il n'est pas nécessaire que ce soit un serveur Python, n'importe quel serveur local fonctionnera, mais le `start-server.bat` inclus utilise Python pour la simplicité)
+> Utilisez un serveur HTTP local pour que le navigateur puisse charger les données du CV et les traductions. Le script `start-server.bat` fourni utilise Python.
 
 1.  **Prérequis** : Vous avez besoin de Python installé pour lancer le serveur local.
 2.  **Lancer le serveur** : Double-cliquez sur `start-server.bat`. Cela démarrera un serveur web local et ouvrira votre navigateur par défaut sur `http://localhost:8080`.
-3.  **Choisir votre CV** : Utilisez le menu déroulant en haut de la page pour sélectionner un fichier JSON dans le dossier `sources/cv-data/`.
+3.  **Choisir votre CV** : Utilisez le menu déroulant ou ouvrez `http://localhost:8080/?file=sources/cv-data/cv-data.template.json`.
 
 ### 🚀 Comment déployer (en ligne)
 
-1.  **Prérequis** : Vous devez avoir un serveur web capable de servir les fichiers statiques (via FTP, SFTP, ou un service d'hébergement web).
-2.  **Déploiement** : Copiez tous les fichiers du projet dans le répertoire racine de votre serveur web.
+Copiez `index.html` et les ressources de `sources/` chez un hébergeur de fichiers statiques, en conservant l’arborescence. Incluez les CV que vous souhaitez publier. Le menu déroulant s’appuie sur la liste des fichiers de `sources/cv-data/` fournie par le serveur. Les liens directs `?file=...` fonctionnent aussi si cette liste est désactivée.
 
 ### 📝 Édition des données
 
-*   **Emplacement des données** : Placez vos fichiers JSON dans le dossier `sources/cv-data/`.
-*   **Modèle** : Vous pouvez utiliser [sources/cv-data/cv-data.template.json](sources/cv-data/cv-data.template.json) comme point de départ.
-*   **Fichier par défaut** : Le générateur cherche par défaut le fichier `sources/cv-data/cv-data.json`.
+Copiez le [modèle d’exemple](sources/cv-data/cv-data.template.json) dans un nouveau fichier sous `sources/cv-data/`. Modifiez `data` pour le contenu du CV et `meta` pour les paramètres d’affichage. Pour choisir le CV ouvert en l’absence du paramètre `?file`, créez `sources/cv-data/default.txt` et inscrivez le nom du fichier sur une ligne. Le fichier de secours est `sources/cv-data/cv-data.json`.
+
+| Champ | Rôle |
+| --- | --- |
+| `meta.title` | Nomme le CV dans le menu déroulant et contribue au titre de l’onglet. |
+| `meta.lang` | Sélectionne l’anglais (`en`) ou le français (`fr`) pour les titres de rubrique communs. |
+| `meta.hidden` | La valeur `true` masque la variante dans le menu, sauf si elle est déjà ouverte. Les liens directs restent accessibles. |
+| `meta.grid_template_columns` | Règle la largeur des colonnes en CSS, par exemple `"2fr 1fr"`. |
+| `meta.zoom` | Règle l’échelle du CV, par exemple `"95%"`. Vérifiez l’aperçu avant impression en A4 après avoir ajusté le zoom ou les colonnes. |
+
+Le rendu et le menu déroulant acceptent les commentaires sur une ligne (`//`), les blocs de commentaire (`/* ... */`) et les virgules finales dans les fichiers de CV. Vous pouvez commenter des entrées facultatives pour les rétablir plus tard. Les outils qui exigent du JSON strict peuvent refuser cette syntaxe.
+
+### 🌐 Traductions
+
+Les titres de rubrique communs se trouvent dans le [dictionnaire anglais](sources/i18n/en.json) et le [dictionnaire français](sources/i18n/fr.json). Modifiez ces fichiers pour renommer une rubrique dans tous les CV de la langue concernée. Adaptez le texte et les liens de `data` dans chaque CV.
 
 ### 🎨 Icônes (FontAwesome)
 
